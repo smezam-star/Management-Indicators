@@ -1545,6 +1545,11 @@ button {
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    color: #1e293b !important;
+}
+
+.qa-modal-content h3, .qa-modal-content p, .qa-modal-content li, .qa-modal-content span, .qa-modal-content strong {
+    color: #1e293b !important;
 }
 
 .qa-list-container {
