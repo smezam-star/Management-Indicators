@@ -531,11 +531,10 @@ Mantén un tono institucional, pedagógico y directo.`;
 
             if (matchedLines.length > 0) {
                 respuestaIA = "📚 **Revisando el repositorio oficial encontré esto:**\n\n" + 
-                              matchedLines.slice(0, 2).map(l => "📌 " + l).join('\n\n') + 
-                              "\n\n¿Te ayuda esto a formular tu indicador?";
+                              matchedLines.slice(0, 2).map(l => "📌 " + l).join('\n\n');
             } else {
-                // 3. Respuesta automática / Socrática por defecto
-                respuestaIA = "🤔 Esa es una excelente pregunta. En la metodología del DNP, lo primero que debemos preguntarnos es: **¿Qué queremos medir exactamente (Atributo) y sobre quién (Población)?**\n\nIntenta desglosar tu idea usando esos dos conceptos y te ayudaré a ubicarlo en la Cadena de Valor.";
+                // 3. Respuesta por defecto sin divagar
+                respuestaIA = "No encontré una respuesta exacta en el manual oficial para esa consulta. Te sugiero seleccionar una de las preguntas sugeridas en los botones de arriba, o intentar usar términos más específicos como 'cadena de valor', 'SMART', o 'CREMA'.";
             }
         }
 
@@ -564,6 +563,14 @@ Mantén un tono institucional, pedagógico y directo.`;
                 e.preventDefault();
                 procesarEnvio();
             }
+        });
+
+        // Event listener para chips de sugerencias
+        document.querySelectorAll('.suggestion-chip').forEach(chip => {
+            chip.addEventListener('click', () => {
+                const texto = chip.textContent.trim();
+                enviarMensajeGemini(texto);
+            });
         });
     }
 

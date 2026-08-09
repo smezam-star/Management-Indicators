@@ -1238,7 +1238,7 @@ button {
     border: 1px solid #cbd5e1;
     border-radius: 20px;
     padding: 10px 16px;
-    font-size: 0.9rem;
+    font-size: 16px; /* Evita auto-zoom en iOS */
     outline: none;
     transition: all 0.2s;
 }
@@ -1265,6 +1265,39 @@ button {
 .chat-send-btn:hover {
     background-color: #1d4ed8;
     transform: scale(1.05);
+}
+
+/* Sugerencias en el chat */
+.chat-suggestions {
+    display: flex;
+    gap: 8px;
+    padding: 10px 16px;
+    background: #f8fafc;
+    border-top: 1px solid #e2e8f0;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none; /* Firefox */
+}
+.chat-suggestions::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+}
+
+.suggestion-chip {
+    background: #e2e8f0;
+    border: 1px solid #cbd5e1;
+    border-radius: 16px;
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    color: #334155;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    font-family: inherit;
+    flex-shrink: 0;
+}
+
+.suggestion-chip:hover {
+    background: #cbd5e1;
+    transform: scale(1.02);
 }
 
 /* Whiteboard FAB and Modal */
@@ -1406,9 +1439,10 @@ button {
         order: 2; /* Menú de navegación abajo */
     }
 
-    .right-sidebar {
+    .copilot-panel {
         order: 3; /* El chat queda de último */
-        height: 600px;
+        height: auto;
+        min-height: 400px;
         margin-bottom: 60px; /* Espacio para que el botón flotante no estorbe */
     }
 
@@ -1427,6 +1461,11 @@ button {
 
     .input-row, .form-group-row {
         flex-direction: column;
+    }
+    
+    .wizard-actions button {
+        padding: 12px 24px;
+        font-size: 1.1rem;
     }
     
     .learning-container {
