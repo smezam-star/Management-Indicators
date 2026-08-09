@@ -87,8 +87,11 @@ Mantén un tono institucional, pedagógico y directo.`;
                 window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
                 
                 const archivosPDF = [
-                    '../Documento_base_preguntas_gestion_indicadores.pdf',
-                    '../Indicadores_Gestion_Publica_Preguntas_y_Respuestas.pdf'
+                    '../12079-1.pdf',
+                    '../Indicadores_Gestion_Publica_Preguntas_y_Respuestas.pdf',
+                    '../Guia_para_elaborar_Indicadores.pdf',
+                    '../Guia_construccion_interpretacion_indicadores.pdf',
+                    '../Documento_base_preguntas_gestion_indicadores.pdf'
                 ];
                 
                 let textoExtraido = '';
