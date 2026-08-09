@@ -1618,4 +1618,14 @@ button {
         width: 95%;
         height: 90%;
     }
+
+    .toggle-copilot-tab {
+        display: none !important;
+    }
+
+    .app-container.copilot-hidden .copilot-panel {
+        transform: none !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+    }
 }
