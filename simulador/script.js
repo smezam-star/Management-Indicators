@@ -119,6 +119,7 @@ Mantén un tono institucional, pedagógico y directo.`;
         renderPortfolio();
         cargarContextoDocumentos();
         initParticles();
+        updateGlowListeners();
     }
 
     function initParticles() {
@@ -323,6 +324,14 @@ Mantén un tono institucional, pedagógico y directo.`;
             });
         }
 
+        // PDF Download (Professional Print view trigger)
+        const downloadPdfBtn = document.getElementById('downloadPdfBtn');
+        if (downloadPdfBtn) {
+            downloadPdfBtn.addEventListener('click', () => {
+                window.print();
+            });
+        }
+
         // Analysis Actions (Instant)
         document.getElementById('analyzeStep1Btn').addEventListener('click', () => {
             if (!state.data.preguntaVaga) return alert("Escribe una pregunta.");
@@ -372,6 +381,7 @@ Mantén un tono institucional, pedagógico y directo.`;
         updateUI();
         if (viewId === 'step-5') updateFichaTecnica();
         if (viewId === 'portfolio') renderPortfolio();
+        updateGlowListeners();
     }
 
     function updateUI() {
@@ -484,6 +494,41 @@ Mantén un tono institucional, pedagógico y directo.`;
         document.getElementById('ft-acumulacion').textContent = state.data.acumulacion || 'Pendiente';
         document.getElementById('ft-unidad').textContent = state.data.unidad || 'Pendiente';
         document.getElementById('ft-fuente').textContent = state.data.fuente || 'Sugerida por IA';
+
+        // Calcular Score CREMAS localmente
+        let score = 0;
+        const criteria = {
+            c: (state.data.nombreIndicador && state.data.nombreIndicador.length > 10),
+            r: !!state.data.cadenaValor,
+            e: (state.data.formulaCalculo && state.data.formulaCalculo.length > 5),
+            m: (state.data.formulaCalculo && (state.data.formulaCalculo.includes('/') || state.data.formulaCalculo.includes('*'))),
+            a: !!state.data.componentes.poblacion,
+            s: !!state.data.componentes.atributo
+        };
+
+        let criteriaCount = 0;
+        Object.keys(criteria).forEach(key => {
+            const isMet = criteria[key];
+            const tagEl = document.getElementById(`tag-${key}`);
+            if (tagEl) {
+                if (isMet) {
+                    tagEl.style.background = 'rgba(16, 185, 129, 0.2)';
+                    tagEl.style.color = '#10b981';
+                    tagEl.style.border = '1px solid #10b981';
+                    criteriaCount++;
+                } else {
+                    tagEl.style.background = 'rgba(255, 255, 255, 0.05)';
+                    tagEl.style.color = 'rgba(255, 255, 255, 0.3)';
+                    tagEl.style.border = 'none';
+                }
+            }
+        });
+
+        const pct = Math.round((criteriaCount / 6) * 100);
+        const scoreEl = document.getElementById('cremasScore');
+        const fillEl = document.getElementById('cremasGaugeFill');
+        if (scoreEl) scoreEl.textContent = `Score: ${pct}%`;
+        if (fillEl) fillEl.style.width = `${pct}%`;
     }
 
     function autoGenerateIndicator(query) {
@@ -736,6 +781,21 @@ Mantén un tono institucional, pedagógico y directo.`;
                 enviarMensajeGemini(item.q);
             });
             qaModalList.appendChild(btn);
+        });
+    }
+
+    function handleMouseMove(e) {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        e.currentTarget.style.setProperty('--mouse-x', `${x}px`);
+        e.currentTarget.style.setProperty('--mouse-y', `${y}px`);
+    }
+
+    function updateGlowListeners() {
+        document.querySelectorAll('.glass-panel, .vc-card, .card-info').forEach(el => {
+            el.removeEventListener('mousemove', handleMouseMove);
+            el.addEventListener('mousemove', handleMouseMove);
         });
     }
 

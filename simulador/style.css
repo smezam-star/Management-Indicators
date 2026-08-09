@@ -388,11 +388,24 @@ html {
 
 .view-content {
     display: none;
-    animation: fadeIn 0.4s ease forwards;
 }
 
 .view-content.active {
     display: block;
+    animation: slideInFade 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes slideInFade {
+    0% {
+        opacity: 0;
+        transform: translateY(15px);
+        filter: blur(5px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+    }
 }
 
 @keyframes fadeIn {
@@ -1431,9 +1444,28 @@ button {
     flex-shrink: 0;
 }
 
-.suggestion-chip:hover {
-    background: #cbd5e1;
-    transform: scale(1.02);
+/* Glow Border Effect for Glass Panels */
+.glass-panel, .vc-card, .card-info {
+    position: relative;
+    overflow: hidden;
+}
+
+.glass-panel::before, .vc-card::before, .card-info::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(400px circle at var(--mouse-x, 0) var(--mouse-y, 0), rgba(255, 255, 255, 0.08), transparent 80%);
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.glass-panel:hover::before, .vc-card:hover::before, .card-info:hover::before {
+    opacity: 1;
 }
 
 .info-help-btn {
@@ -1721,5 +1753,79 @@ button {
         transform: none !important;
         opacity: 1 !important;
         pointer-events: auto !important;
+    }
+}
+
+/* Estilos de Impresión Profesional (PDF) */
+@media print {
+    #particles-js, .hero-section, .top-bar, .sidebar, .copilot-panel, #wizardStepper, #wizardActions, .fab-whiteboard, #toggleCopilotBtn, .cremas-gauge-container, #downloadPdfBtn, #saveIndicatorBtn, .instruction-text {
+        display: none !important;
+    }
+    
+    .app-container {
+        display: block !important;
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    
+    .workspace {
+        width: 100% !important;
+        padding: 0 !important;
+    }
+    
+    .view-content {
+        display: none !important;
+    }
+    
+    .view-content#view-step-5 {
+        display: block !important;
+        opacity: 1 !important;
+        transform: none !important;
+        filter: none !important;
+    }
+    
+    body {
+        background: white !important;
+        color: black !important;
+        font-size: 12pt !important;
+    }
+    
+    .ficha-tecnica {
+        background: white !important;
+        border: 2px solid #000 !important;
+        color: black !important;
+        box-shadow: none !important;
+        padding: 20px !important;
+        border-radius: 0 !important;
+    }
+    
+    .ficha-row {
+        border-bottom: 1px solid #ddd !important;
+        padding: 10px 0 !important;
+    }
+    
+    .ficha-label {
+        color: #333 !important;
+        font-weight: bold !important;
+    }
+    
+    .ia-suggestion {
+        background: transparent !important;
+        color: black !important;
+        border: none !important;
+        font-weight: normal !important;
+    }
+    
+    .view-content#view-step-5::before {
+        content: "FICHA TÉCNICA OFICIAL DE INDICADOR DE GESTIÓN";
+        display: block;
+        text-align: center;
+        font-size: 16pt;
+        font-weight: bold;
+        margin-bottom: 20px;
+        border-bottom: 3px double #000;
+        padding-bottom: 10px;
+        color: black;
     }
 }

@@ -276,6 +276,25 @@
                 <div class="view-content wizard-step" id="view-step-5">
                     <p class="instruction-text">Ficha Técnica generada. Revisa y guarda en tu portafolio local.</p>
 
+                    <!-- Medidor de Calidad CREMAS -->
+                    <div class="cremas-gauge-container" style="margin-bottom: 1.5rem; padding: 1.2rem; border-radius: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem;">
+                            <h4 style="margin: 0; font-size: 1rem; color: var(--primary);">Auditoría de Calidad CREMAS</h4>
+                            <span id="cremasScore" style="font-weight: 700; color: white; background: rgba(255,255,255,0.1); padding: 2px 8px; border-radius: 20px; font-size: 0.85rem;">Score: 0%</span>
+                        </div>
+                        <div style="width: 100%; height: 10px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; margin-bottom: 0.8rem;">
+                            <div id="cremasGaugeFill" style="width: 0%; height: 100%; background: linear-gradient(90deg, var(--primary) 0%, var(--success) 100%); transition: width 0.8s ease;"></div>
+                        </div>
+                        <div class="cremas-criteria-tags" style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+                            <span class="criteria-tag" id="tag-c" style="padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.3); transition: all 0.3s;">C - Claro</span>
+                            <span class="criteria-tag" id="tag-r" style="padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.3); transition: all 0.3s;">R - Relevante</span>
+                            <span class="criteria-tag" id="tag-e" style="padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.3); transition: all 0.3s;">E - Económico</span>
+                            <span class="criteria-tag" id="tag-m" style="padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.3); transition: all 0.3s;">M - Medible</span>
+                            <span class="criteria-tag" id="tag-a" style="padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.3); transition: all 0.3s;">A - Adecuado</span>
+                            <span class="criteria-tag" id="tag-s" style="padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.3); transition: all 0.3s;">S - Sensible</span>
+                        </div>
+                    </div>
+
                     <div class="ficha-tecnica">
                         <div class="ficha-row"><span class="ficha-label">Nombre:</span> <span id="ft-nombre">-</span>
                         </div>
@@ -303,6 +322,7 @@
                     </div>
                     <div style="display:flex; gap: 1rem; margin-top: 1.5rem;">
                         <button class="success-btn" id="saveIndicatorBtn">Guardar Indicador</button>
+                        <button class="primary-btn" id="downloadPdfBtn" style="background: var(--secondary); border: none; box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3);">📥 Descargar Ficha PDF</button>
                     </div>
                 </div>
 
