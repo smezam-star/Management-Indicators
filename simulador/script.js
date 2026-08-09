@@ -559,18 +559,43 @@ Mantén un tono institucional, pedagógico y directo.`;
         chatBox.scrollTop = chatBox.scrollHeight;
     }
 
-    // Poblar botones de sugerencias dinámicamente
+    // Lógica del Modal de Preguntas
     const chatSuggestions = document.getElementById('chatSuggestions');
-    if (chatSuggestions && typeof QA_DATABASE !== 'undefined') {
-        chatSuggestions.innerHTML = ''; // limpiar
+    const qaModal = document.getElementById('qaModal');
+    const closeQaBtn = document.getElementById('closeQaBtn');
+    const qaModalList = document.getElementById('qaModalList');
+
+    if (closeQaBtn && qaModal) {
+        closeQaBtn.addEventListener('click', () => {
+            qaModal.classList.remove('active');
+        });
+    }
+
+    if (chatSuggestions && qaModalList && typeof QA_DATABASE !== 'undefined') {
+        // 1. Añadir el botón principal al panel lateral
+        chatSuggestions.innerHTML = ''; 
+        const openBtn = document.createElement('button');
+        openBtn.className = 'suggestion-chip';
+        openBtn.style.background = 'var(--primary)';
+        openBtn.style.color = 'white';
+        openBtn.style.fontWeight = 'bold';
+        openBtn.innerHTML = '📚 Ver el Directorio Completo de Preguntas (25)';
+        openBtn.addEventListener('click', () => {
+            qaModal.classList.add('active');
+        });
+        chatSuggestions.appendChild(openBtn);
+
+        // 2. Poblar el modal con todas las preguntas
+        qaModalList.innerHTML = '';
         QA_DATABASE.forEach(item => {
             const btn = document.createElement('button');
-            btn.className = 'suggestion-chip';
+            btn.className = 'qa-modal-btn';
             btn.textContent = item.q;
             btn.addEventListener('click', () => {
+                qaModal.classList.remove('active');
                 enviarMensajeGemini(item.q);
             });
-            chatSuggestions.appendChild(btn);
+            qaModalList.appendChild(btn);
         });
     }
 
