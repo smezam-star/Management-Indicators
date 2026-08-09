@@ -20,6 +20,19 @@
     <!-- Fondo Interactivo -->
     <div id="particles-js"></div>
 
+    <!-- Hero Section (Bienvenida Inmersiva) -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">Proyecto de Implementación de IA</h1>
+            <h2 class="hero-subtitle">Indicadores de Gestión Públicos</h2>
+            <p class="hero-desc">Simulador interactivo basado en guías oficiales DNP y DANE con asistencia de Copiloto IA</p>
+            <button class="hero-scroll-btn" id="startSimulatorBtn">
+                <span>Comenzar Simulador</span>
+                <div class="bounce-arrow">↓</div>
+            </button>
+        </div>
+    </section>
+
     <!-- Top Bar -->
     <header class="top-bar glass-panel">
         <div class="tb-brand" style="justify-content: center; width: 100%; text-align: center;">
@@ -270,14 +283,20 @@
                                 id="ft-pregunta">-</span></div>
                         <div class="ficha-row"><span class="ficha-label">Cadena Valor:</span> <span
                                 id="ft-cadena">-</span></div>
-                        <div class="ficha-row"><span class="ficha-label">Tipo Calidad:</span> <span id="ft-calidad"
-                                class="ia-suggestion">Pendiente</span></div>
-                        <div class="ficha-row"><span class="ficha-label">Acumulación:</span> <span id="ft-acumulacion"
-                                class="ia-suggestion">Pendiente</span></div>
+                        <div class="ficha-row">
+                            <span class="ficha-label">Tipo Calidad: <button class="info-help-btn" data-help="calidad">ℹ️</button></span> 
+                            <span id="ft-calidad" class="ia-suggestion">Pendiente</span>
+                        </div>
+                        <div class="ficha-row">
+                            <span class="ficha-label">Acumulación: <button class="info-help-btn" data-help="acumulacion">ℹ️</button></span> 
+                            <span id="ft-acumulacion" class="ia-suggestion">Pendiente</span>
+                        </div>
                         <div class="ficha-row"><span class="ficha-label">Fórmula:</span> <span id="ft-formula">-</span>
                         </div>
-                        <div class="ficha-row"><span class="ficha-label">Unidad:</span> <span id="ft-unidad"
-                                class="ia-suggestion">Pendiente</span></div>
+                        <div class="ficha-row">
+                            <span class="ficha-label">Unidad: <button class="info-help-btn" data-help="unidad">ℹ️</button></span> 
+                            <span id="ft-unidad" class="ia-suggestion">Pendiente</span>
+                        </div>
                         <div class="ficha-row"><span class="ficha-label">Fuente Oficial:</span> <span
                                 class="tag-warning">[VERIFICAR]</span> <span id="ft-fuente"
                                 class="ia-suggestion">Sugerida por IA</span></div>
@@ -520,6 +539,19 @@
                 <button class="whiteboard-close" id="closeWhiteboardBtn">✖ Cerrar Pizarra</button>
             </div>
             <iframe src="https://excalidraw.com/" frameborder="0" class="whiteboard-iframe"></iframe>
+        </div>
+    </div>
+
+    <!-- Help Modal (Ayudas Metodológicas del Paso 5) -->
+    <div class="whiteboard-modal" id="helpModal">
+        <div class="qa-modal-content" style="max-width: 450px; height: auto;">
+            <div class="whiteboard-header">
+                <h3 id="helpModalTitle">Ayuda Metodológica</h3>
+                <button class="whiteboard-close" id="closeHelpModalBtn">✖ Cerrar</button>
+            </div>
+            <div class="qa-list-container" id="helpModalBody" style="padding: 1.5rem; line-height: 1.6; font-size: 0.95rem; text-align: left;">
+                <!-- Se poblará dinámicamente desde script.js -->
+            </div>
         </div>
     </div>
 

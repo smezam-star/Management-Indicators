@@ -50,6 +50,46 @@ Mantén un tono institucional, pedagógico y directo.`;
         }
     };
 
+    const helpTexts = {
+        calidad: {
+            title: "Tipo de Calidad del Indicador",
+            body: `
+                <p>Define la dimensión del desempeño que se evalúa según las guías DNP y ESAP:</p>
+                <ul style="margin-left: 1.2rem; margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                    <li><strong>Eficacia:</strong> Mide el grado de cumplimiento de los objetivos y metas (¿Se logró el resultado deseado?).</li>
+                    <li><strong>Eficiencia:</strong> Relaciona los productos entregados con los insumos y costos empleados (¿Se optimizaron los recursos?).</li>
+                    <li><strong>Efectividad:</strong> Evalúa el impacto o los efectos estructurales a mediano/largo plazo en la población objetivo.</li>
+                    <li><strong>Calidad:</strong> Mide las propiedades o atributos específicos del servicio entregado (Ej: oportunidad, satisfacción del usuario, accesibilidad).</li>
+                </ul>
+            `
+        },
+        acumulacion: {
+            title: "Tipo de Acumulación (Medición)",
+            body: `
+                <p>Establece cómo se registran y comparan los datos del indicador a lo largo del tiempo:</p>
+                <ul style="margin-left: 1.2rem; margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                    <li><strong>Flujo:</strong> Logros que se repiten anualmente de manera independiente.</li>
+                    <li><strong>Acumulado:</strong> Suma continua de los avances logrados periodo tras periodo.</li>
+                    <li><strong>Stock:</strong> Mide el esfuerzo por mantener un resultado o nivel deseado en un instante.</li>
+                    <li><strong>Capacidad:</strong> Avance porcentual restando la línea base directamente del total de la meta.</li>
+                    <li><strong>Reducción:</strong> Esfuerzo orientado a disminuir un valor inicial indeseado frente a su línea base.</li>
+                </ul>
+            `
+        },
+        unidad: {
+            title: "Unidad de Medida",
+            body: `
+                <p>Es la recomendación de la magnitud o unidad en la que se cuantifica el indicador:</p>
+                <ul style="margin-left: 1.2rem; margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                    <li><strong>Porcentaje (%):</strong> Relación proporcional entre dos variables homogéneas (Ej. % de cobertura).</li>
+                    <li><strong>Tasa:</strong> Relación de frecuencia de un evento respecto a una población expuesta en un periodo (Ej. Tasa de mortalidad por 100,000 hab).</li>
+                    <li><strong>Número absoluto:</strong> Conteo simple de elementos o productos entregados (Ej. Número de escuelas construidas).</li>
+                    <li><strong>Promedio:</strong> Suma de valores dividido entre la cantidad de elementos (Ej. Promedio de horas de atención).</li>
+                </ul>
+            `
+        }
+    };
+
     // DOM Elements
     const els = {
         stepBtns: document.querySelectorAll('.step-btn'),
@@ -245,6 +285,41 @@ Mantén un tono institucional, pedagógico y directo.`;
         if (toggleCopilotBtn) {
             toggleCopilotBtn.addEventListener('click', () => {
                 appContainer.classList.toggle('copilot-hidden');
+            });
+        }
+
+        // Hero Scroll Button
+        const startSimulatorBtn = document.getElementById('startSimulatorBtn');
+        if (startSimulatorBtn) {
+            startSimulatorBtn.addEventListener('click', () => {
+                const topBar = document.querySelector('.top-bar');
+                if (topBar) {
+                    topBar.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        }
+
+        // Concept Help Modals
+        const helpModal = document.getElementById('helpModal');
+        const helpModalTitle = document.getElementById('helpModalTitle');
+        const helpModalBody = document.getElementById('helpModalBody');
+        const closeHelpModalBtn = document.getElementById('closeHelpModalBtn');
+
+        document.querySelectorAll('.info-help-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const helpKey = e.currentTarget.getAttribute('data-help');
+                const textData = helpTexts[helpKey];
+                if (textData) {
+                    helpModalTitle.innerHTML = `ℹ️ ${textData.title}`;
+                    helpModalBody.innerHTML = textData.body;
+                    helpModal.classList.add('active');
+                }
+            });
+        });
+
+        if (closeHelpModalBtn) {
+            closeHelpModalBtn.addEventListener('click', () => {
+                helpModal.classList.remove('active');
             });
         }
 
