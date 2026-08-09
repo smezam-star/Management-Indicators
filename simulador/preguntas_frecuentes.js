@@ -58,5 +58,45 @@ const QA_DATABASE = [
     {
         q: "¿Qué es un indicador de impacto y por qué es el más difícil de construir?",
         a: "Mide cambios estructurales a mediano y largo plazo en la población, asociados a múltiples intervenciones simultáneas (ej: razón de mortalidad). Es el más difícil porque exige atribuir causalidad estricta y a menudo requiere evaluaciones de impacto complejas."
+    },
+    {
+        q: "¿Qué es un indicador de producto?",
+        a: "Se refieren a la cantidad y calidad de los bienes y servicios que se generan mediante las actividades de una institución (ej: número de techos construidos o número de talleres realizados)."
+    },
+    {
+        q: "¿Qué es un indicador de resultado?",
+        a: "Se refieren a los efectos inmediatos de la acción institucional y/o de un programa sobre la sociedad o entorno (ej: porcentaje de niños vacunados, porcentaje de cobertura de acueducto)."
+    },
+    {
+        q: "¿Qué es un indicador de proceso?",
+        a: "Se refieren al seguimiento de la realización de las actividades programadas, respecto a los recursos, tiempos y presupuesto. Miden el esfuerzo administrativo aplicado para lograr los bienes y servicios."
+    },
+    {
+        q: "¿Qué es un indicador de insumo?",
+        a: "Se refieren al seguimiento de los recursos financieros, físicos o de talento humano disponibles y utilizados en una intervención o proceso (ej: presupuesto gastado, horas hombre asignadas)."
+    },
+    {
+        q: "¿Cuál es el rol del DANE respecto a los indicadores?",
+        a: "Como coordinador del Sistema Estadístico Nacional (SEN), el DANE busca establecer lineamientos técnicos y estándares de calidad para que la información producida por las entidades sea veraz, coherente e imparcial."
+    },
+    {
+        q: "¿Qué evalúa la dimensión de Eficiencia en un indicador?",
+        a: "Permite establecer la relación de productividad en el uso de los recursos. Mide qué tantos insumos se requirieron para generar cierta cantidad de productos (ej: costo promedio por estudiante matriculado)."
+    },
+    {
+        q: "¿Qué evalúa la dimensión de Eficacia en un indicador?",
+        a: "Expresa el grado de cumplimiento o logro de los objetivos, metas y resultados planeados, independientemente de los costos incurridos (ej: porcentaje de avance en la construcción de una obra)."
+    },
+    {
+        q: "¿Qué evalúa la dimensión de Economía en un indicador?",
+        a: "Mide la capacidad de la institución para movilizar o administrar adecuadamente los recursos financieros, minimizando los costos de los insumos pero manteniendo la calidad (ej: ahorro en gastos de funcionamiento)."
+    },
+    {
+        q: "¿Qué es el sistema SINERGIA?",
+        a: "Es la herramienta del Gobierno Nacional de Colombia (liderada por el DNP) para hacer seguimiento sistemático al Plan Nacional de Desarrollo y evaluar estratégicamente el desempeño de las políticas públicas."
+    },
+    {
+        q: "¿Por qué se dice que una buena medición debe ser Oportuna?",
+        a: "Porque la información recolectada debe estar disponible en el periodo de tiempo exacto en que es relevante para la toma de decisiones, permitiendo corregir rumbos y prevenir fallos estructurales a tiempo."
     }
 ];

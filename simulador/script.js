@@ -559,39 +559,18 @@ Mantén un tono institucional, pedagógico y directo.`;
         chatBox.scrollTop = chatBox.scrollHeight;
     }
 
-    if (copilotSendBtn && copilotInput) {
-        // Poblar botones de sugerencias dinámicamente
-        const chatSuggestions = document.getElementById('chatSuggestions');
-        if (chatSuggestions && typeof QA_DATABASE !== 'undefined') {
-            chatSuggestions.innerHTML = ''; // limpiar
-            QA_DATABASE.forEach(item => {
-                const btn = document.createElement('button');
-                btn.className = 'suggestion-chip';
-                btn.textContent = item.q;
-                btn.addEventListener('click', () => {
-                    enviarMensajeGemini(item.q);
-                });
-                chatSuggestions.appendChild(btn);
+    // Poblar botones de sugerencias dinámicamente
+    const chatSuggestions = document.getElementById('chatSuggestions');
+    if (chatSuggestions && typeof QA_DATABASE !== 'undefined') {
+        chatSuggestions.innerHTML = ''; // limpiar
+        QA_DATABASE.forEach(item => {
+            const btn = document.createElement('button');
+            btn.className = 'suggestion-chip';
+            btn.textContent = item.q;
+            btn.addEventListener('click', () => {
+                enviarMensajeGemini(item.q);
             });
-        }
-
-        const procesarEnvio = () => {
-            const texto = copilotInput.value.trim();
-            if (texto) {
-                copilotInput.value = '';
-                enviarMensajeGemini(texto);
-            }
-        };
-
-        // Event listener para botón de enviar
-        copilotSendBtn.addEventListener('click', procesarEnvio);
-
-        // Event listener para tecla Enter
-        copilotInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                procesarEnvio();
-            }
+            chatSuggestions.appendChild(btn);
         });
     }
 
