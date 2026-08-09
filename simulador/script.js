@@ -86,37 +86,37 @@ Mantén un tono institucional, pedagógico y directo.`;
             particlesJS('particles-js', {
                 "particles": {
                     "number": {
-                        "value": 60,
+                        "value": 90,
                         "density": { "enable": true, "value_area": 800 }
                     },
                     "color": { "value": ["#38bdf8", "#f59e0b", "#cbd5e1"] },
                     "shape": { "type": "circle" },
                     "opacity": {
-                        "value": 0.5,
+                        "value": 0.6,
                         "random": true,
-                        "anim": { "enable": true, "speed": 1, "opacity_min": 0.1, "sync": false }
+                        "anim": { "enable": true, "speed": 1.2, "opacity_min": 0.1, "sync": false }
                     },
                     "size": {
-                        "value": 3,
+                        "value": 3.5,
                         "random": true,
-                        "anim": { "enable": true, "speed": 2, "size_min": 0.1, "sync": false }
+                        "anim": { "enable": true, "speed": 2.5, "size_min": 0.1, "sync": false }
                     },
                     "line_linked": {
                         "enable": true,
-                        "distance": 150,
+                        "distance": 160,
                         "color": "#cbd5e1",
-                        "opacity": 0.2,
-                        "width": 1
+                        "opacity": 0.35,
+                        "width": 1.2
                     },
                     "move": {
                         "enable": true,
-                        "speed": 1.5,
+                        "speed": 2,
                         "direction": "none",
                         "random": true,
                         "straight": false,
                         "out_mode": "out",
                         "bounce": false,
-                        "attract": { "enable": false, "rotateX": 600, "rotateY": 1200 }
+                        "attract": { "enable": true, "rotateX": 600, "rotateY": 1200 }
                     }
                 },
                 "interactivity": {
@@ -127,7 +127,7 @@ Mantén un tono institucional, pedagógico y directo.`;
                         "resize": true
                     },
                     "modes": {
-                        "grab": { "distance": 140, "line_linked": { "opacity": 0.5 } },
+                        "grab": { "distance": 180, "line_linked": { "opacity": 0.65 } },
                         "push": { "particles_nb": 4 }
                     }
                 },

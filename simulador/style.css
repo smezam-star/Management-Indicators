@@ -105,6 +105,7 @@ body {
     padding: 1.5rem;
     height: calc(100vh - 70px);
     transition: grid-template-columns 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
 }
 
 .app-container.copilot-hidden {
@@ -1186,7 +1187,7 @@ button {
 
 .toggle-copilot-tab {
     position: absolute;
-    left: -40px;
+    right: 344px; /* 320px de panel + 24px (1.5rem) de padding */
     top: 50%;
     transform: translateY(-50%);
     width: 40px;
@@ -1201,7 +1202,7 @@ button {
     justify-content: center;
     box-shadow: -4px 0 12px rgba(0,0,0,0.2);
     z-index: 100;
-    transition: background 0.3s, transform 0.3s;
+    transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s, transform 0.3s;
     font-size: 1.2rem;
     pointer-events: auto;
 }
@@ -1212,8 +1213,7 @@ button {
 }
 
 .app-container.copilot-hidden .toggle-copilot-tab {
-    left: -60px; /* Sale un poco más a la izquierda cuando está oculto para ser más visible */
-    width: 60px;
+    right: 24px; /* Se mueve al borde derecho del contenedor al ocultar */
 }
 
 .copilot-chat {
