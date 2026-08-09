@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centro de Aprendizaje Metodológico - Gestión de Indicadores</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Top Bar -->
+    <header class="top-bar glass-panel">
+        <div class="tb-left">
+            <a href="index.html" class="top-btn" style="text-decoration: none; display: inline-block;">
+                ⬅ Volver al Simulador
+            </a>
+        </div>
+        <div class="tb-brand">
+            <div class="logos">
+                <img src="mintic.png" alt="MinTIC" title="Ministerio TIC">
+                <img src="unicartagena.jpg" alt="Universidad de Cartagena" title="Universidad de Cartagena">
+            </div>
+            <h2>
+                Centro de Aprendizaje<br>
+                <span>Documentación Oficial</span>
+            </h2>
+        </div>
+    </header>
+
+    <div class="app-container" style="grid-template-columns: 280px 1fr; max-width: 1400px; padding: 2rem;">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar glass-panel" style="height: calc(100vh - 120px);">
+            <div class="sidebar-header" style="padding-top: 1rem;">
+                <h3>Índice Metodológico</h3>
+                <p>Navega por las guías oficiales</p>
+            </div>
+            <nav class="steps-nav" id="aprendizaje-nav">
+                <button class="step-btn active" data-target="tab-que-es">
+                    <span class="step-number">1</span>
+                    <div class="step-text"><span class="step-title">¿Qué es un Indicador?</span></div>
+                </button>
+                <button class="step-btn" data-target="tab-tipos">
+                    <span class="step-number">2</span>
+                    <div class="step-text"><span class="step-title">Tipos de Indicadores</span></div>
+                </button>
+                <button class="step-btn" data-target="tab-como-medir">
+                    <span class="step-number">3</span>
+                    <div class="step-text"><span class="step-title">¿Cómo se mide?</span></div>
+                </button>
+                <button class="step-btn" data-target="tab-cadena">
+                    <span class="step-number">4</span>
+                    <div class="step-text"><span class="step-title">Cadena de Valor</span></div>
+                </button>
+                <button class="step-btn" data-target="tab-criterios">
+                    <span class="step-number">5</span>
+                    <div class="step-text"><span class="step-title">Criterios de Calidad</span></div>
+                </button>
+                <button class="step-btn" data-target="tab-fuentes">
+                    <span class="step-number">6</span>
+                    <div class="step-text"><span class="step-title">Bases de Datos</span></div>
+                </button>
+                <button class="step-btn" data-target="tab-prompts">
+                    <span class="step-number">7</span>
+                    <div class="step-text"><span class="step-title">Prompts IA (Claude)</span></div>
+                </button>
+            </nav>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="workspace glass-panel" style="height: calc(100vh - 120px); overflow-y: auto; padding: 2rem;">
+            
+            <div class="modal-body-scroll" style="padding: 0;">
+                <!-- Tab 1 -->
+                <div class="tab-content active" id="tab-que-es">
+                    <h3 class="tab-title">1. ¿Qué es un indicador?</h3>
+                    <p class="tab-text">Es una representación cuantitativa o cualitativa que permite describir características o comportamientos de la realidad a través del tiempo, comparada con metas o periodos anteriores para evaluar el desempeño (DANE/ESAP).</p>
+                    
+                    <div class="tip-box">
+                        <strong>Diferencia entre Dato e Indicador:</strong><br>
+                        Un <strong>dato</strong> es un registro puntual sin procesar ("350 gestantes atendidas"). Un <strong>indicador</strong> es una relación matemática frente a una meta o comparación temporal ("% de gestantes atendidas vs el año anterior").
+                    </div>
+
+                    <h4 class="sub-title">Jerarquías (Niveles de Intervención)</h4>
+                    <ul class="styled-list">
+                        <li><strong>Indicadores Estratégicos:</strong> Miden los resultados finales e impactos (cambios en bienestar). Orientan el rumbo del gobierno.</li>
+                        <li><strong>Indicadores de Gestión/Operativos:</strong> Miden los procesos, actividades e insumos de la entidad. (Ej. número de PQRS resueltas).</li>
+                    </ul>
+                </div>
+
+                <!-- Tab Tipos -->
+                <div class="tab-content" id="tab-tipos">
+                    <h3 class="tab-title">2. Tipos de Indicadores de Gestión</h3>
+                    <p class="tab-text">Según la Guía del DAFP (Función Pública) y DNP, el desempeño público se evalúa mediante las siguientes tipologías de indicadores:</p>
+                    
+                    <div class="grid-2">
+                        <div class="card-info">
+                            <h4>🎯 Eficacia</h4>
+                            <p>Mide el grado de cumplimiento de los objetivos y metas. (Ej. % de niños vacunados frente a la meta programada).</p>
+                        </div>
+                        <div class="card-info">
+                            <h4>⚙️ Eficiencia</h4>
+                            <p>Relación entre los productos/servicios generados y los insumos o recursos utilizados. (Ej. Costo promedio por kilómetro de vía construida).</p>
+                        </div>
+                        <div class="card-info">
+                            <h4>🚀 Efectividad (Impacto)</h4>
+                            <p>Involucra la eficacia y eficiencia para lograr el impacto deseado en la población. (Ej. Disminución de la tasa de mortalidad infantil).</p>
+                        </div>
+                        <div class="card-info">
+                            <h4>💰 Economía</h4>
+                            <p>Capacidad de la entidad para movilizar y administrar adecuadamente los recursos financieros. (Ej. Porcentaje de ahorro en compras públicas).</p>
+                        </div>
+                        <div class="card-info" style="grid-column: span 2;">
+                            <h4>⭐ Calidad</h4>
+                            <p>Evalúa los atributos de los bienes o servicios frente a las necesidades de los usuarios, incluyendo oportunidad, accesibilidad y satisfacción. (Ej. Tiempo promedio de espera para atención médica).</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tab Como Medir -->
+                <div class="tab-content" id="tab-como-medir">
+                    <h3 class="tab-title">3. ¿Cómo se mide? (Tipos de Acumulación)</h3>
+                    <p class="tab-text">Dependiendo de lo que buscas lograr (mantener, incrementar o disminuir un valor), Sinergia (DNP) clasifica las mediciones así:</p>
+                    <div class="grid-2">
+                        <div class="card-info">
+                            <h4>📈 Flujo</h4>
+                            <p>Mide logros que se repiten anualmente sin que un año afecte al otro (Ej. Exportaciones anuales). La meta del cuatrienio es el último año.</p>
+                        </div>
+                        <div class="card-info">
+                            <h4>➕ Acumulado</h4>
+                            <p>Suma los avances de cada año. (Ej. Número de viviendas entregadas en 4 años).</p>
+                        </div>
+                        <div class="card-info">
+                            <h4>✅ Stock</h4>
+                            <p>Mide el esfuerzo por <em>mantener</em> un resultado. La meta y la línea base son iguales. (Ej. Mantener 1000 km de vías fluviales).</p>
+                        </div>
+                        <div class="card-info">
+                            <h4>🎯 Capacidad</h4>
+                            <p>Mide el avance acumulado restando la línea base (punto de partida) a la meta esperada de llegada.</p>
+                        </div>
+                        <div class="card-info">
+                            <h4>📉 Reducción</h4>
+                            <p>Esfuerzo por disminuir un valor frente a la línea base. Estar por debajo de la meta es mejor. (Ej. Hectáreas deforestadas).</p>
+                        </div>
+                        <div class="card-info">
+                            <h4>📉 Reducción Anual</h4>
+                            <p>Se acumulan avances durante el año para que al final sea menor al del año anterior. (Ej. Tasa de Homicidios).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab Cadena -->
+                <div class="tab-content" id="tab-cadena">
+                    <h3 class="tab-title">4. Cadena de Valor Pública</h3>
+                    <p class="tab-text">La cadena de valor es la relación secuencial que añade valor a lo largo de un proceso de transformación del Estado (DNP/DANE).</p>
+                    <ul class="styled-list">
+                        <li><strong>Insumos:</strong> Recursos financieros, físicos o humanos disponibles para el programa (Ej. Presupuesto ejecutado).</li>
+                        <li><strong>Actividades:</strong> Acciones que transforman insumos (Ej. Jornadas de salud realizadas).</li>
+                        <li><strong>Productos:</strong> Bienes o servicios tangibles entregados a la población (Ej. Número de subsidios entregados).</li>
+                        <li><strong>Resultados (Outcome):</strong> Cambios en comportamiento, acceso o condición de la población (Ej. % de niños matriculados).</li>
+                        <li><strong>Impactos:</strong> Cambios estructurales de largo plazo (Ej. Razón de mortalidad materna).</li>
+                    </ul>
+                </div>
+
+                <!-- Tab Criterios -->
+                <div class="tab-content" id="tab-criterios">
+                    <h3 class="tab-title">5. Características y Criterios</h3>
+                    
+                    <h4 class="sub-title">El Modelo Integrado de Planeación y Gestión (MIPG)</h4>
+                    <p class="tab-text">El FURAG (Formulario Único de Avance a la Gestión) evalúa el desempeño institucional. Un buen indicador debe aportar a medir la eficiencia, eficacia, y la relación Estado-ciudadano con transparencia y normatividad legal.</p>
+
+                    <h4 class="sub-title">Criterios Estadísticos (DANE)</h4>
+                    <ul class="styled-list">
+                        <li><strong>Pertinencia:</strong> Describe bien la situación objeto de la acción.</li>
+                        <li><strong>Funcionalidad:</strong> Es operable y sensible a cambios.</li>
+                        <li><strong>Confiabilidad:</strong> Medido bajo estándares estadísticos rigurosos.</li>
+                    </ul>
+
+                    <h4 class="sub-title">Criterios Básicos CREMAS</h4>
+                    <div class="grid-2">
+                        <div class="card-info"><strong>C</strong>laro: Expresado sin ambigüedad.</div>
+                        <div class="card-info"><strong>R</strong>elevante: Relacionado directamente al objetivo.</div>
+                        <div class="card-info"><strong>E</strong>conómico: Costo de recolección razonable.</div>
+                        <div class="card-info"><strong>M</strong>edible: Validable independientemente.</div>
+                        <div class="card-info"><strong>A</strong>decuado: Representatividad suficiente.</div>
+                        <div class="card-info"><strong>S</strong>ensible: Captura cambios rápidos en el tiempo.</div>
+                    </div>
+
+                    <div class="tip-box" style="margin-top:1rem; border-color: #f59e0b;">
+                        ⚠️ <strong>Incentivos Perversos:</strong> Evita medir "por quedar bien" (Ej. Cumplimiento de metas con valores triviales). El indicador debe reflejar un esfuerzo real.
+                    </div>
+                </div>
+
+                <!-- Tab Fuentes -->
+                <div class="tab-content" id="tab-fuentes">
+                    <h3 class="tab-title">6. Fuentes Oficiales y Bases de Datos (Colombia)</h3>
+                    <p class="tab-text">Para construir indicadores con el criterio de "Confiabilidad", es esencial acudir a fuentes oficiales. A continuación, las bases de datos primordiales del Estado colombiano:</p>
+                    
+                    <div class="card-info" style="margin-bottom: 1rem;">
+                        <h4>📊 DANE (Departamento Administrativo Nacional de Estadística)</h4>
+                        <p><strong>GEIH (Gran Encuesta Integrada de Hogares):</strong> Principal fuente de información sobre mercado laboral, empleo, desempleo e ingresos.</p>
+                        <p><strong>Censo Nacional de Población y Vivienda:</strong> Base demográfica fundamental para calcular tasas poblacionales por municipio.</p>
+                    </div>
+
+                    <div class="card-info" style="margin-bottom: 1rem;">
+                        <h4>🏥 SISPRO / MSPS (Ministerio de Salud)</h4>
+                        <p><strong>RIPS (Registros Individuales de Prestación de Servicios):</strong> Datos detallados de atenciones en salud, morbilidad, consultas y procedimientos.</p>
+                    </div>
+
+                    <div class="card-info" style="margin-bottom: 1rem;">
+                        <h4>📚 SIMAT / MEN (Ministerio de Educación)</h4>
+                        <p><strong>Sistema Integrado de Matrícula:</strong> Fuente oficial para cobertura educativa, deserción, estudiantes matriculados e infraestructura escolar.</p>
+                    </div>
+
+                    <div class="card-info" style="margin-bottom: 1rem;">
+                        <h4>🛡️ SIEDCO (Policía Nacional / MinDefensa)</h4>
+                        <p><strong>Sistema de Información Estadístico, Delincuencial, Contravencional y Operativo:</strong> Cifras oficiales sobre homicidios, hurtos, extorsión y operatividad policial.</p>
+                    </div>
+                    
+                    <div class="card-info">
+                        <h4>💰 DNP / MinHacienda / Función Pública</h4>
+                        <p><strong>SECOP:</strong> Contratación pública (Transparencia y economía).</p>
+                        <p><strong>SPI (Sinergia):</strong> Seguimiento a Proyectos de Inversión. Avance físico y financiero.</p>
+                        <p><strong>FURAG:</strong> Desempeño Institucional y MIPG.</p>
+                    </div>
+                </div>
+
+                <!-- Tab 5 -->
+                <div class="tab-content" id="tab-prompts">
+                    <h3 class="tab-title">7. Prompts para Inteligencia Artificial</h3>
+                    <p class="tab-text">La IA no reemplaza tu juicio técnico, es un potenciador. Copia estos comandos para usar en Claude.ai o herramientas similares:</p>
+                    
+                    <div class="prompt-box">
+                        <strong>Diagnóstico de preguntas vagas:</strong><br>
+                        "Tengo esta pregunta de gestión: [pegar pregunta]. Evalúa si cumple los 4 componentes (población, atributo, ámbito, referente de comparación) y dime cuáles faltan."
+                    </div>
+                    <div class="prompt-box">
+                        <strong>Generación de alternativas de indicador:</strong><br>
+                        "A partir de esta pregunta de gestión ya refinada: [pegar], propón 3 posibles indicadores con su fórmula, unidad de medida y fuente posible, siguiendo los criterios CREMA (Claro, Relevante, Económico, Medible, Adecuado)."
+                    </div>
+                    <div class="prompt-box">
+                        <strong>Redacción de Ficha Técnica:</strong><br>
+                        "Redacta el borrador de la ficha técnica de este indicador usando esta plantilla: [pegar plantilla]. Deja explícitos los campos que dependen de datos que debo verificar con la fuente oficial."
+                    </div>
+                    <div class="prompt-box">
+                        <strong>Revisión Cruzada:</strong><br>
+                        "Revisa esta batería de 10 indicadores y señala cuáles son en realidad indicadores de producto disfrazados de indicadores de resultado."
+                    </div>
+                </div>
+            </div>
+            
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabBtns = document.querySelectorAll('#aprendizaje-nav .step-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const targetId = e.currentTarget.getAttribute('data-target');
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    e.currentTarget.classList.add('active');
+                    document.getElementById(targetId).classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

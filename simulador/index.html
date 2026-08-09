@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto de implementación de IA - Gestión de Indicadores</title>
+    <!-- Google Fonts: Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Top Bar -->
+    <header class="top-bar glass-panel">
+        <div class="tb-brand" style="justify-content: center; width: 100%; text-align: center;">
+            <h2>
+                Proyecto de implementación de IA<br>
+                <span>Gestión de Indicadores</span>
+            </h2>
+        </div>
+    </header>
+
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar glass-panel">
+            <div class="sidebar-header">
+                <h3>Método 5 Pasos</h3>
+                <p>Formulación con Copiloto IA</p>
+            </div>
+            <nav class="steps-nav">
+                <button class="step-btn active" data-view="step-1">
+                    <span class="step-number">1</span>
+                    <div class="step-text">
+                        <span class="step-title">Pregunta Vaga</span>
+                        <span class="step-desc">Captura inicial</span>
+                    </div>
+                </button>
+                <button class="step-btn" data-view="step-2">
+                    <span class="step-number">2</span>
+                    <div class="step-text">
+                        <span class="step-title">Desglose</span>
+                        <span class="step-desc">4 Componentes</span>
+                    </div>
+                </button>
+                <button class="step-btn" data-view="step-3">
+                    <span class="step-number">3</span>
+                    <div class="step-text">
+                        <span class="step-title">Cadena de Valor</span>
+                        <span class="step-desc">Ubicación estratégica</span>
+                    </div>
+                </button>
+                <button class="step-btn" data-view="step-4">
+                    <span class="step-number">4</span>
+                    <div class="step-text">
+                        <span class="step-title">Formulación</span>
+                        <span class="step-desc">Nombre y CREMAS</span>
+                    </div>
+                </button>
+                <button class="step-btn" data-view="step-5">
+                    <span class="step-number">5</span>
+                    <div class="step-text">
+                        <span class="step-title">Ficha Técnica</span>
+                        <span class="step-desc">Gobernanza del Dato</span>
+                    </div>
+                </button>
+                <div class="divider"></div>
+                <button class="step-btn portfolio-btn" data-view="portfolio">
+                    <span class="step-number">★</span>
+                    <div class="step-text">
+                        <span class="step-title">Mis Indicadores</span>
+                        <span class="step-desc">Portafolio guardado</span>
+                    </div>
+                </button>
+            </nav>
+            <div class="sidebar-footer" style="display: flex; flex-direction: column; gap: 0.5rem;">
+                <button id="resetBtn" class="secondary-btn">Limpiar Ejercicio Actual</button>
+                <button id="learningBtn" class="step-btn portfolio-btn" data-view="learning"
+                    style="display: flex; justify-content: center; background: var(--primary); border: none; box-shadow: 0 2px 4px rgba(0,0,0,0.3);">
+                    <div class="step-text" style="text-align: center;">
+                        <span class="step-title"
+                            style="color: white; font-weight: 700; text-shadow: 0 1px 2px rgba(0,0,0,0.3);">📚
+                            Información Base y Guías</span>
+                    </div>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="workspace glass-panel">
+            <header class="workspace-header">
+                <h1 id="stepMainTitle">Paso 1: Captura de la Pregunta Vaga</h1>
+                <p id="stepMainDesc">Ingresa la necesidad de información tal como la formula el directivo o la
+                    ciudadanía.</p>
+            </header>
+
+            <div class="workspace-content">
+                <!-- Stepper de Progreso -->
+                <div class="wizard-stepper" id="wizardStepper">
+                    <div class="step-indicator active" data-step="1">
+                        <span class="step-number">1</span>
+                        <span class="step-label">Pregunta</span>
+                    </div>
+                    <div class="step-line"></div>
+                    <div class="step-indicator" data-step="2">
+                        <span class="step-number">2</span>
+                        <span class="step-label">Componentes</span>
+                    </div>
+                    <div class="step-line"></div>
+                    <div class="step-indicator" data-step="3">
+                        <span class="step-number">3</span>
+                        <span class="step-label">Cadena Valor</span>
+                    </div>
+                    <div class="step-line"></div>
+                    <div class="step-indicator" data-step="4">
+                        <span class="step-number">4</span>
+                        <span class="step-label">Fórmula</span>
+                    </div>
+                    <div class="step-line"></div>
+                    <div class="step-indicator" data-step="5">
+                        <span class="step-number">5</span>
+                        <span class="step-label">Ficha Técnica</span>
+                    </div>
+                </div>
+
+                <!-- View: Step 1 -->
+                <div class="view-content wizard-step active" id="view-step-1">
+                    <div class="examples-bar">
+                        <span class="examples-label">Cargar ejemplo:</span>
+                        <button class="example-btn" onclick="app.loadExample('salud1')">Salud Rural</button>
+                        <button class="example-btn" onclick="app.loadExample('edu1')">Educación</button>
+                        <button class="example-btn" onclick="app.loadExample('seg1')">Seguridad</button>
+                    </div>
+
+                    <div class="input-group mt-1">
+                        <label for="preguntaVaga">Pregunta de Gestión (Vaga):</label>
+                        <div class="tooltip-container">
+                            <textarea id="preguntaVaga"
+                                placeholder="Ej. ¿Cómo va la atención en salud a las embarazadas del sector rural?"></textarea>
+                            <div class="inline-tip">💡 <strong>Consejo (DNP):</strong> Escribe la inquietud exactamente
+                                como se pide, sin intentar darle formato matemático aún.</div>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 1rem;">
+                        <button class="primary-btn" id="analyzeStep1Btn">Analizar y Avanzar</button>
+                        <button class="magic-btn" id="magicGenerateBtn">✨ Auto-Generar Indicador</button>
+                    </div>
+                </div>
+
+                <!-- View: Step 2 -->
+                <div class="view-content wizard-step" id="view-step-2">
+                    <div class="examples-bar">
+                        <span class="examples-label">Autocompletar ejemplo:</span>
+                        <button class="example-btn" onclick="app.loadExample('salud2')">Salud Rural</button>
+                    </div>
+                    <p class="instruction-text mt-1">Completa los 4 componentes estructurales para hacer tu pregunta
+                        medible.</p>
+                    <div class="form-grid">
+                        <div class="input-group">
+                            <label for="compPoblacion">1. Población / Unidad</label>
+                            <input type="text" id="compPoblacion" placeholder="Ej. Mujeres gestantes rurales">
+                        </div>
+                        <div class="input-group">
+                            <label for="compAtributo">2. Atributo o Dimensión</label>
+                            <input type="text" id="compAtributo" placeholder="Ej. Acceso oportuno">
+                        </div>
+                        <div class="input-group">
+                            <label for="compAmbito">3. Ámbito Temporal/Geográfico</label>
+                            <input type="text" id="compAmbito" placeholder="Ej. Municipio X, año 2026">
+                        </div>
+                        <div class="input-group">
+                            <label for="compReferente">4. Referente de Comparación</label>
+                            <input type="text" id="compReferente" placeholder="Ej. Año anterior">
+                        </div>
+                    </div>
+                    <div class="input-group mt-1">
+                        <label for="preguntaRefinada">Pregunta de Gestión Refinada (Consolidada):</label>
+                        <textarea id="preguntaRefinada"
+                            placeholder="Redacta la pregunta uniendo los 4 componentes..."></textarea>
+                    </div>
+                    <button class="primary-btn" id="analyzeStep2Btn">Validar y Avanzar</button>
+                </div>
+
+                <!-- View: Step 3 -->
+                <div class="view-content wizard-step" id="view-step-3">
+                    <p class="instruction-text">Selecciona en qué eslabón de la Cadena de Valor Pública se ubica el
+                        objetivo a medir.</p>
+                    <div class="value-chain">
+                        <label class="vc-card">
+                            <input type="radio" name="cadenaValor" value="Insumos">
+                            <div class="vc-content">
+                                <h3>Insumos</h3>
+                                <p>Recursos financieros, físicos o humanos asignados.</p>
+                            </div>
+                        </label>
+                        <label class="vc-card">
+                            <input type="radio" name="cadenaValor" value="Actividades">
+                            <div class="vc-content">
+                                <h3>Actividades</h3>
+                                <p>Procesos intermedios, tareas operativas, jornadas.</p>
+                            </div>
+                        </label>
+                        <label class="vc-card">
+                            <input type="radio" name="cadenaValor" value="Productos">
+                            <div class="vc-content">
+                                <h3>Productos</h3>
+                                <p>Bienes o servicios tangibles entregados (Ej. 100 raciones entregadas).</p>
+                            </div>
+                        </label>
+                        <label class="vc-card">
+                            <input type="radio" name="cadenaValor" value="Resultados">
+                            <div class="vc-content">
+                                <h3>Resultados <span
+                                        style="font-size:0.7em; background:var(--primary); padding:2px 6px; border-radius:4px; color:white;">Recomendado</span>
+                                </h3>
+                                <p>Cambios en acceso, comportamiento o estado de la población.</p>
+                            </div>
+                        </label>
+                        <label class="vc-card">
+                            <input type="radio" name="cadenaValor" value="Impactos">
+                            <div class="vc-content">
+                                <h3>Impactos</h3>
+                                <p>Transformaciones estructurales a largo plazo (Ej. Mortalidad).</p>
+                            </div>
+                        </label>
+                    </div>
+                    <button class="primary-btn mt-1" id="analyzeStep3Btn">Evaluar y Avanzar</button>
+                </div>
+
+                <!-- View: Step 4 -->
+                <div class="view-content wizard-step" id="view-step-4">
+                    <div class="examples-bar">
+                        <span class="examples-label">Ver fórmula de ejemplo:</span>
+                        <button class="example-btn" onclick="app.loadExample('salud4')">Salud Rural</button>
+                    </div>
+                    <div class="input-group mt-1">
+                        <label for="nombreIndicador">Nombre del Indicador Propuesto:</label>
+                        <div class="tooltip-container">
+                            <input type="text" id="nombreIndicador"
+                                placeholder="Ej. Porcentaje de embarazadas rurales con controles al día">
+                            <div class="inline-tip">💡 Regla: Objeto de medición + Condición deseada (Verbo en
+                                participio) + Contexto.</div>
+                        </div>
+                    </div>
+                    <div class="input-group mt-1">
+                        <label for="formulaCalculo">Fórmula Matemática (Borrador):</label>
+                        <input type="text" id="formulaCalculo"
+                            placeholder="Ej. (Gestantes rurales con 4 controles / Total) * 100">
+                    </div>
+                    <button class="primary-btn mt-1" id="analyzeStep4Btn">Auditoría CREMAS Inmediata</button>
+                </div>
+
+                <!-- View: Step 5 -->
+                <div class="view-content wizard-step" id="view-step-5">
+                    <p class="instruction-text">Ficha Técnica generada. Revisa y guarda en tu portafolio local.</p>
+
+                    <div class="ficha-tecnica">
+                        <div class="ficha-row"><span class="ficha-label">Nombre:</span> <span id="ft-nombre">-</span>
+                        </div>
+                        <div class="ficha-row"><span class="ficha-label">Pregunta:</span> <span
+                                id="ft-pregunta">-</span></div>
+                        <div class="ficha-row"><span class="ficha-label">Cadena Valor:</span> <span
+                                id="ft-cadena">-</span></div>
+                        <div class="ficha-row"><span class="ficha-label">Tipo Calidad:</span> <span id="ft-calidad"
+                                class="ia-suggestion">Pendiente</span></div>
+                        <div class="ficha-row"><span class="ficha-label">Acumulación:</span> <span id="ft-acumulacion"
+                                class="ia-suggestion">Pendiente</span></div>
+                        <div class="ficha-row"><span class="ficha-label">Fórmula:</span> <span id="ft-formula">-</span>
+                        </div>
+                        <div class="ficha-row"><span class="ficha-label">Unidad:</span> <span id="ft-unidad"
+                                class="ia-suggestion">Pendiente</span></div>
+                        <div class="ficha-row"><span class="ficha-label">Fuente Oficial:</span> <span
+                                class="tag-warning">[VERIFICAR]</span> <span id="ft-fuente"
+                                class="ia-suggestion">Sugerida por IA</span></div>
+                    </div>
+                    <div style="display:flex; gap: 1rem; margin-top: 1.5rem;">
+                        <button class="success-btn" id="saveIndicatorBtn">Guardar Indicador</button>
+                    </div>
+                </div>
+
+                <!-- View: Learning Center -->
+                <div class="view-content" id="view-learning">
+                    <div style="display: flex; flex-direction: column; height: 100%;">
+                        <div class="learning-layout"
+                            style="display: grid; grid-template-columns: 220px 1fr; gap: 1.5rem; flex: 1; min-height: 0;">
+                            <div class="learning-sidebar" style="display: flex; flex-direction: column; gap: 0.5rem;">
+                                <button class="tab-btn active" data-target="tab-que-es">1. ¿Qué es?</button>
+                                <button class="tab-btn" data-target="tab-tipos">2. Tipos</button>
+                                <button class="tab-btn" data-target="tab-como-medir">3. ¿Cómo se mide?</button>
+                                <button class="tab-btn" data-target="tab-cadena">4. Cadena de Valor</button>
+                                <button class="tab-btn" data-target="tab-criterios">5. Criterios</button>
+                                <button class="tab-btn" data-target="tab-fuentes">6. Bases Oficiales</button>
+                                <button class="tab-btn" data-target="tab-prompts">7. Prompts IA</button>
+                            </div>
+                            <div class="learning-body" style="overflow-y: auto; padding-right: 1rem;">
+
+                                <div class="tab-content active" id="tab-que-es">
+                                    <h3 class="tab-title">1. ¿Qué es un indicador?</h3>
+                                    <p class="tab-text">Es una representación cuantitativa o cualitativa que permite
+                                        describir características o comportamientos de la realidad a través del tiempo,
+                                        comparada con metas o periodos anteriores para evaluar el desempeño (DANE/ESAP).
+                                    </p>
+                                    <div class="tip-box">
+                                        <strong>Diferencia entre Dato e Indicador:</strong><br>
+                                        Un <strong>dato</strong> es un registro puntual sin procesar. Un
+                                        <strong>indicador</strong> es una relación matemática frente a una meta o
+                                        comparación.
+                                    </div>
+                                    <h4 class="sub-title">Jerarquías (Niveles de Intervención)</h4>
+                                    <ul class="styled-list">
+                                        <li><strong>Indicadores Estratégicos:</strong> Miden los resultados finales e
+                                            impactos (cambios en bienestar).</li>
+                                        <li><strong>Indicadores de Gestión/Operativos:</strong> Miden los procesos,
+                                            actividades e insumos de la entidad.</li>
+                                    </ul>
+                                </div>
+
+                                <div class="tab-content" id="tab-tipos">
+                                    <h3 class="tab-title">Tipos de Indicadores de Gestión</h3>
+                                    <div class="grid-2">
+                                        <div class="card-info">
+                                            <h4>🎯 Eficacia</h4>
+                                            <p>Grado de cumplimiento de objetivos y metas.</p>
+                                        </div>
+                                        <div class="card-info">
+                                            <h4>⚙️ Eficiencia</h4>
+                                            <p>Relación entre productos generados e insumos utilizados.</p>
+                                        </div>
+                                        <div class="card-info">
+                                            <h4>🚀 Efectividad</h4>
+                                            <p>Involucra eficacia y eficiencia para lograr el impacto deseado.</p>
+                                        </div>
+                                        <div class="card-info">
+                                            <h4>💰 Economía</h4>
+                                            <p>Capacidad de administrar recursos financieros.</p>
+                                        </div>
+                                        <div class="card-info" style="grid-column: span 2;">
+                                            <h4>⭐ Calidad</h4>
+                                            <p>Atributos del servicio (oportunidad, accesibilidad, satisfacción).</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-content" id="tab-como-medir">
+                                    <h3 class="tab-title">2. ¿Cómo se mide? (Tipos de Acumulación)</h3>
+                                    <div class="grid-2">
+                                        <div class="card-info">
+                                            <h4>📈 Flujo</h4>
+                                            <p>Logros que se repiten anualmente.</p>
+                                        </div>
+                                        <div class="card-info">
+                                            <h4>➕ Acumulado</h4>
+                                            <p>Suma los avances de cada año.</p>
+                                        </div>
+                                        <div class="card-info">
+                                            <h4>✅ Stock</h4>
+                                            <p>Mide el esfuerzo por mantener un resultado.</p>
+                                        </div>
+                                        <div class="card-info">
+                                            <h4>🎯 Capacidad</h4>
+                                            <p>Avance restando línea base a la meta.</p>
+                                        </div>
+                                        <div class="card-info">
+                                            <h4>📉 Reducción</h4>
+                                            <p>Esfuerzo por disminuir frente a línea base.</p>
+                                        </div>
+                                        <div class="card-info">
+                                            <h4>📉 Reducción Anual</h4>
+                                            <p>Acumula avances para que sea menor al año anterior.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-content" id="tab-cadena">
+                                    <h3 class="tab-title">3. Cadena de Valor Pública</h3>
+                                    <ul class="styled-list">
+                                        <li><strong>Insumos:</strong> Recursos financieros, físicos o humanos.</li>
+                                        <li><strong>Actividades:</strong> Acciones que transforman insumos.</li>
+                                        <li><strong>Productos:</strong> Bienes o servicios entregados.</li>
+                                        <li><strong>Resultados (Outcome):</strong> Cambios en comportamiento, acceso o
+                                            condición.</li>
+                                        <li><strong>Impactos:</strong> Cambios estructurales de largo plazo.</li>
+                                    </ul>
+                                </div>
+
+                                <div class="tab-content" id="tab-criterios">
+                                    <h3 class="tab-title">4. Criterios de Calidad</h3>
+                                    <h4 class="sub-title">Criterios Básicos CREMAS</h4>
+                                    <div class="grid-2">
+                                        <div class="card-info"><strong>C</strong>laro: Expresado sin ambigüedad.</div>
+                                        <div class="card-info"><strong>R</strong>elevante: Relacionado directamente al
+                                            objetivo.</div>
+                                        <div class="card-info"><strong>E</strong>conómico: Costo de recolección
+                                            razonable.</div>
+                                        <div class="card-info"><strong>M</strong>edible: Validable independientemente.
+                                        </div>
+                                        <div class="card-info"><strong>A</strong>decuado: Representatividad suficiente.
+                                        </div>
+                                        <div class="card-info"><strong>S</strong>ensible: Captura cambios rápidos en el
+                                            tiempo.</div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-content" id="tab-fuentes">
+                                    <h3 class="tab-title">Fuentes Oficiales</h3>
+                                    <div class="card-info" style="margin-bottom: 0.5rem;">
+                                        <h4>📊 DANE:</h4>
+                                        <p>GEIH (Mercado laboral), Censo Nacional.</p>
+                                    </div>
+                                    <div class="card-info" style="margin-bottom: 0.5rem;">
+                                        <h4>🏥 SISPRO:</h4>
+                                        <p>RIPS (Atención en salud).</p>
+                                    </div>
+                                    <div class="card-info" style="margin-bottom: 0.5rem;">
+                                        <h4>📚 SIMAT:</h4>
+                                        <p>Matrículas y cobertura educativa.</p>
+                                    </div>
+                                    <div class="card-info" style="margin-bottom: 0.5rem;">
+                                        <h4>🛡️ SIEDCO:</h4>
+                                        <p>Operatividad policial y delitos.</p>
+                                    </div>
+                                    <div class="card-info" style="margin-bottom: 0.5rem;">
+                                        <h4>💰 DNP / Función Pública:</h4>
+                                        <p>SECOP (contratos), Sinergia (inversión), FURAG.</p>
+                                    </div>
+                                </div>
+
+                                <div class="tab-content" id="tab-prompts">
+                                    <h3 class="tab-title">5. Prompts para IA</h3>
+                                    <div class="prompt-box"><strong>Diagnóstico:</strong> "Evalúa si esta pregunta
+                                        cumple los 4 componentes (población, atributo, ámbito, referente)..."</div>
+                                    <div class="prompt-box"><strong>Generación:</strong> "Propón 3 posibles indicadores
+                                        con fórmula y fuente para esta pregunta..."</div>
+                                    <div class="prompt-box"><strong>Revisión:</strong> "Señala cuáles de estos
+                                        indicadores son de producto disfrazados de resultado..."</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- View: Portfolio -->
+                <div class="view-content" id="view-portfolio">
+                    <div id="portfolio-container" class="portfolio-grid">
+                        <!-- Rendered indicators will go here -->
+                    </div>
+                </div>
+
+                <!-- Botones de Navegación del Wizard -->
+                <div class="wizard-actions" id="wizardActions">
+                    <button type="button" id="btn-prev" class="btn btn-secondary" disabled>Anterior</button>
+                    <button type="button" id="btn-next" class="btn btn-primary">Siguiente</button>
+                </div>
+            </div>
+        </main>
+
+        <!-- AI Copilot Sidebar -->
+        <aside class="copilot-panel glass-panel" style="display: flex; flex-direction: column;">
+            <div class="copilot-header">
+                <div class="copilot-avatar">
+                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-1.5v1.5a2.5 2.5 0 0 0 5 0V8a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-1.5v1.5a2.5 2.5 0 0 0-5 0V16a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2v-2.5a2.5 2.5 0 0 0-5 0V14a2 2 0 0 1-2-2v-2a2 2 0 0 1 2-2h1.5V6.5A2.5 2.5 0 0 0 4.5 9H2a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1.5A2.5 2.5 0 0 0 9 6.5V5a2 2 0 0 1 2-2h1z"></path>
+                    </svg>
+                </div>
+                <h3>Copiloto Rápido</h3>
+            </div>
+            
+            <div class="copilot-chat" id="copilotChat">
+                <div class="chat-bubble ai-bubble">
+                    <p>¡Hola! Escribe tu necesidad o usa el botón "✨ Auto-Generar Indicador" para automatizar el proceso entero.</p>
+                </div>
+            </div>
+            
+            <div class="chat-input-container">
+                <input type="text" class="chat-input" placeholder="Escribe aquí tu consulta..." id="copilotInput">
+                <button type="button" class="chat-send-btn" id="copilotSendBtn">
+                    <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                </button>
+            </div>
+        </aside>
+    </div>
+
+    </div>
+
+    <!-- Whiteboard FAB -->
+    <button class="fab-whiteboard" id="whiteboardBtn" title="Abrir Pizarra del Taller">
+        🖌️ Pizarra del Taller
+    </button>
+
+    <!-- Whiteboard Modal -->
+    <div class="whiteboard-modal" id="whiteboardModal">
+        <div class="whiteboard-modal-content">
+            <div class="whiteboard-header">
+                <h3>🖌️ Pizarra Colaborativa</h3>
+                <button class="whiteboard-close" id="closeWhiteboardBtn">✖ Cerrar Pizarra</button>
+            </div>
+            <iframe src="https://excalidraw.com/" frameborder="0" class="whiteboard-iframe"></iframe>
+        </div>
+    </div>
+
+    <script src="knowledge.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
