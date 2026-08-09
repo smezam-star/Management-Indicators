@@ -1445,6 +1445,14 @@ button {
     border: none;
 }
 
+.learning-layout {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 1.5rem;
+    flex: 1;
+    min-height: 0;
+}
+
 /* =========================================
    Responsive Design / Diseño Móvil
    ========================================= */
@@ -1530,7 +1538,8 @@ button {
         font-size: 1.1rem;
     }
     
-    .learning-container {
+    .learning-layout {
+        display: flex;
         flex-direction: column;
     }
     
@@ -1538,6 +1547,13 @@ button {
         width: 100%;
         border-right: none;
         border-bottom: 1px solid var(--glass-border);
+        flex-direction: row !important;
+        overflow-x: auto;
+        padding-bottom: 10px;
+    }
+    
+    .learning-sidebar .tab-btn {
+        flex: 0 0 auto;
     }
     
     .whiteboard-modal-content, .qa-modal-content {
