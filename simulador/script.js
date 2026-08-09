@@ -312,7 +312,13 @@ Mantén un tono institucional, pedagógico y directo.`;
                 const textData = helpTexts[helpKey];
                 if (textData) {
                     helpModalTitle.innerHTML = `ℹ️ ${textData.title}`;
+                    helpModalTitle.style.color = '#1e293b';
                     helpModalBody.innerHTML = textData.body;
+                    // Forzar el color de texto a negro/gris oscuro directamente desde JS para evitar problemas de caché CSS
+                    helpModalBody.style.color = '#1e293b';
+                    helpModalBody.querySelectorAll('p, li, strong, span, ul').forEach(el => {
+                        el.style.color = '#1e293b';
+                    });
                     helpModal.classList.add('active');
                 }
             });
