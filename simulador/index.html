@@ -463,27 +463,29 @@
         </main>
 
         <!-- AI Copilot Sidebar -->
-        <aside class="copilot-panel glass-panel" style="display: flex; flex-direction: column; position: relative;">
+        <aside class="copilot-panel" style="position: relative;">
             <button id="toggleCopilotBtn" class="toggle-copilot-tab" title="Plegar Copiloto">
                 <span>🤖</span>
             </button>
-            <div class="copilot-header">
-                <div class="copilot-avatar">
-                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-1.5v1.5a2.5 2.5 0 0 0 5 0V8a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-1.5v1.5a2.5 2.5 0 0 0-5 0V16a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2v-2.5a2.5 2.5 0 0 0-5 0V14a2 2 0 0 1-2-2v-2a2 2 0 0 1 2-2h1.5V6.5A2.5 2.5 0 0 0 4.5 9H2a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1.5A2.5 2.5 0 0 0 9 6.5V5a2 2 0 0 1 2-2h1z"></path>
-                    </svg>
+            <div class="copilot-panel-inner glass-panel" style="display: flex; flex-direction: column; height: 100%; width: 100%;">
+                <div class="copilot-header">
+                    <div class="copilot-avatar">
+                        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-1.5v1.5a2.5 2.5 0 0 0 5 0V8a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-1.5v1.5a2.5 2.5 0 0 0-5 0V16a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2v-2.5a2.5 2.5 0 0 0-5 0V14a2 2 0 0 1-2-2v-2a2 2 0 0 1 2-2h1.5V6.5A2.5 2.5 0 0 0 4.5 9H2a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1.5A2.5 2.5 0 0 0 9 6.5V5a2 2 0 0 1 2-2h1z"></path>
+                        </svg>
+                    </div>
+                    <h3>Copiloto Rápido</h3>
                 </div>
-                <h3>Copiloto Rápido</h3>
-            </div>
-            
-            <div class="copilot-chat" id="copilotChat">
-                <div class="chat-bubble ai-bubble">
-                    <p>¡Hola! Selecciona una de las preguntas frecuentes a continuación para obtener ayuda teórica, o usa el botón "✨ Auto-Generar Indicador" para automatizar el proceso entero.</p>
+                
+                <div class="copilot-chat" id="copilotChat">
+                    <div class="chat-bubble ai-bubble">
+                        <p>¡Hola! Selecciona una de las preguntas frecuentes a continuación para obtener ayuda teórica, o usa el botón "✨ Auto-Generar Indicador" para automatizar el proceso entero.</p>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="chat-suggestions" id="chatSuggestions" style="border-top: none; padding-bottom: 20px;">
-                <!-- Los botones se generarán dinámicamente desde preguntas_frecuentes.js -->
+                
+                <div class="chat-suggestions" id="chatSuggestions" style="border-top: none; padding-bottom: 20px;">
+                    <!-- Los botones se generarán dinámicamente desde preguntas_frecuentes.js -->
+                </div>
             </div>
         </aside>
     </div>
