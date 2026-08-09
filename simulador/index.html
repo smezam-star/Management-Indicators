@@ -269,6 +269,20 @@
                         <input type="text" id="formulaCalculo"
                             placeholder="Ej. (Gestantes rurales con 4 controles / Total) * 100">
                     </div>
+                    <details class="formula-details" style="margin-top: 1rem; margin-bottom: 1rem; padding: 0.8rem; border-radius: 8px; font-size: 0.9rem; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); text-align: left;">
+                        <summary style="cursor: pointer; font-weight: 600; color: var(--primary); outline: none; list-style: none;">📈 ¿Qué significa la fórmula de Variación Porcentual? (Ver Desglose)</summary>
+                        <div style="margin-top: 0.8rem; color: #ffffff !important; line-height: 1.5;">
+                            <p style="margin-bottom: 0.6rem; color: #ffffff !important;">Esta fórmula sirve para medir <strong>cambios relativos (incrementos o disminuciones)</strong> de una variable en el tiempo:</p>
+                            <div style="text-align: center; background: rgba(255,255,255,0.1); padding: 0.6rem; border-radius: 6px; font-family: monospace; font-size: 0.95rem; margin-bottom: 0.6rem; color: #ffffff !important; font-weight: bold;">
+                                ((Año Actual - Año Anterior) / Año Anterior) * 100
+                            </div>
+                            <ul style="margin-left: 1.2rem; display: flex; flex-direction: column; gap: 0.4rem; list-style-type: disc; color: #ffffff !important;">
+                                <li style="color: #ffffff !important;"><strong style="color: #ffffff !important;">Año Actual - Año Anterior:</strong> Mide el cambio absoluto (cuántas unidades se ganaron o perdieron).</li>
+                                <li style="color: #ffffff !important;"><strong style="color: #ffffff !important;">División entre Año Anterior:</strong> Compara ese cambio frente al valor inicial de partida para ver su proporción relativa.</li>
+                                <li style="color: #ffffff !important;"><strong style="color: #ffffff !important;">x 100:</strong> Convierte la fracción decimal en un porcentaje (%) fácil de interpretar.</li>
+                            </ul>
+                        </div>
+                    </details>
                     <button class="primary-btn mt-1" id="analyzeStep4Btn">Auditoría CREMAS Inmediata</button>
                 </div>
 
