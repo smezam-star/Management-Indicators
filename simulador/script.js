@@ -239,6 +239,15 @@ Mantén un tono institucional, pedagógico y directo.`;
             });
         });
 
+        // Toggle Copilot Panel
+        const toggleCopilotBtn = document.getElementById('toggleCopilotBtn');
+        const appContainer = document.querySelector('.app-container');
+        if (toggleCopilotBtn) {
+            toggleCopilotBtn.addEventListener('click', () => {
+                appContainer.classList.toggle('copilot-hidden');
+            });
+        }
+
         // Analysis Actions (Instant)
         document.getElementById('analyzeStep1Btn').addEventListener('click', () => {
             if (!state.data.preguntaVaga) return alert("Escribe una pregunta.");
