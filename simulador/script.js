@@ -492,6 +492,16 @@ Mantén un tono institucional, pedagógico y directo.`;
         // Lógica del "cerebro local" mejorado: Detección de intenciones y heurística
         const lowerInput = mensajeUsuario.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // Quitar tildes para buscar mejor
         
+        let exactMatchFound = false;
+        if (typeof QA_DATABASE !== 'undefined') {
+            const exactMatch = QA_DATABASE.find(item => item.q.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") === lowerInput);
+            if (exactMatch) {
+                respuestaIA = exactMatch.a;
+                exactMatchFound = true;
+            }
+        }
+
+        if (!exactMatchFound) {
         // 1. Reglas Semánticas (Intenciones conocidas sobre Indicadores DNP)
         if (lowerInput.includes('que es un indicador') || lowerInput.includes('que son los indicadores') || (lowerInput.includes('definicion') && lowerInput.includes('indicador'))) {
             respuestaIA = "📊 **¿Qué es un Indicador de Gestión?**\nEs una herramienta cuantitativa o cualitativa que permite medir el nivel de logro de los objetivos, evaluar el desempeño de un proceso o proyecto, y facilitar la toma de decisiones. Básicamente, te dice si estás alcanzando lo que te propusiste.";
@@ -540,6 +550,7 @@ Mantén un tono institucional, pedagógico y directo.`;
                 respuestaIA = "No encontré una respuesta exacta en el manual oficial para esa consulta. Te sugiero seleccionar una de las preguntas sugeridas en los botones de arriba, o intentar usar términos más específicos como 'cadena de valor', 'SMART', o 'CREMA'.";
             }
         }
+        } // Fin de if (!exactMatchFound)
 
         const botDiv = document.createElement('div');
         botDiv.className = 'message bot-message chat-bubble ai-bubble';
@@ -549,6 +560,21 @@ Mantén un tono institucional, pedagógico y directo.`;
     }
 
     if (copilotSendBtn && copilotInput) {
+        // Poblar botones de sugerencias dinámicamente
+        const chatSuggestions = document.getElementById('chatSuggestions');
+        if (chatSuggestions && typeof QA_DATABASE !== 'undefined') {
+            chatSuggestions.innerHTML = ''; // limpiar
+            QA_DATABASE.forEach(item => {
+                const btn = document.createElement('button');
+                btn.className = 'suggestion-chip';
+                btn.textContent = item.q;
+                btn.addEventListener('click', () => {
+                    enviarMensajeGemini(item.q);
+                });
+                chatSuggestions.appendChild(btn);
+            });
+        }
+
         const procesarEnvio = () => {
             const texto = copilotInput.value.trim();
             if (texto) {
@@ -566,14 +592,6 @@ Mantén un tono institucional, pedagógico y directo.`;
                 e.preventDefault();
                 procesarEnvio();
             }
-        });
-
-        // Event listener para chips de sugerencias
-        document.querySelectorAll('.suggestion-chip').forEach(chip => {
-            chip.addEventListener('click', () => {
-                const texto = chip.textContent.trim();
-                enviarMensajeGemini(texto);
-            });
         });
     }
 
