@@ -54,37 +54,37 @@ Mantén un tono institucional, pedagógico y directo.`;
         calidad: {
             title: "Tipo de Calidad del Indicador",
             body: `
-                <p>Define la dimensión del desempeño que se evalúa según las guías DNP y ESAP:</p>
-                <ul style="margin-left: 1.2rem; margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                    <li><strong>Eficacia:</strong> Mide el grado de cumplimiento de los objetivos y metas (¿Se logró el resultado deseado?).</li>
-                    <li><strong>Eficiencia:</strong> Relaciona los productos entregados con los insumos y costos empleados (¿Se optimizaron los recursos?).</li>
-                    <li><strong>Efectividad:</strong> Evalúa el impacto o los efectos estructurales a mediano/largo plazo en la población objetivo.</li>
-                    <li><strong>Calidad:</strong> Mide las propiedades o atributos específicos del servicio entregado (Ej: oportunidad, satisfacción del usuario, accesibilidad).</li>
+                <p style="color: #000000 !important; font-size: 1rem; line-height: 1.6;">Define la dimensión del desempeño que se evalúa según las guías DNP y ESAP:</p>
+                <ul style="margin-left: 1.2rem; margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.5rem; color: #000000 !important; list-style-type: disc;">
+                    <li style="color: #000000 !important; font-size: 0.95rem; line-height: 1.5;"><strong style="color: #000000 !important;">Eficacia:</strong> Mide el grado de cumplimiento de los objetivos y metas (¿Se logró el resultado deseado?).</li>
+                    <li style="color: #000000 !important; font-size: 0.95rem; line-height: 1.5;"><strong style="color: #000000 !important;">Eficiencia:</strong> Relaciona los productos entregados con los insumos y costos empleados (¿Se optimizaron los recursos?).</li>
+                    <li style="color: #000000 !important; font-size: 0.95rem; line-height: 1.5;"><strong style="color: #000000 !important;">Efectividad:</strong> Evalúa el impacto o los efectos estructurales a mediano/largo plazo en la población objetivo.</li>
+                    <li style="color: #000000 !important; font-size: 0.95rem; line-height: 1.5;"><strong style="color: #000000 !important;">Calidad:</strong> Mide las propiedades o atributos específicos del servicio entregado (Ej: oportunidad, satisfacción del usuario, accesibilidad).</li>
                 </ul>
             `
         },
         acumulacion: {
             title: "Tipo de Acumulación (Medición)",
             body: `
-                <p>Establece cómo se registran y comparan los datos del indicador a lo largo del tiempo:</p>
-                <ul style="margin-left: 1.2rem; margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                    <li><strong>Flujo:</strong> Logros que se repiten anualmente de manera independiente.</li>
-                    <li><strong>Acumulado:</strong> Suma continua de los avances logrados periodo tras periodo.</li>
-                    <li><strong>Stock:</strong> Mide el esfuerzo por mantener un resultado o nivel deseado en un instante.</li>
-                    <li><strong>Capacidad:</strong> Avance porcentual restando la línea base directamente del total de la meta.</li>
-                    <li><strong>Reducción:</strong> Esfuerzo orientado a disminuir un valor inicial indeseado frente a su línea base.</li>
+                <p style="color: #000000 !important; font-size: 1rem; line-height: 1.6;">Establece cómo se registran y comparan los datos del indicador a lo largo del tiempo:</p>
+                <ul style="margin-left: 1.2rem; margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.5rem; color: #000000 !important; list-style-type: disc;">
+                    <li style="color: #000000 !important; font-size: 0.95rem; line-height: 1.5;"><strong style="color: #000000 !important;">Flujo:</strong> Logros que se repiten anualmente de manera independiente.</li>
+                    <li style="color: #000000 !important; font-size: 0.95rem; line-height: 1.5;"><strong style="color: #000000 !important;">Acumulado:</strong> Suma continua de los avances logrados periodo tras periodo.</li>
+                    <li style="color: #000000 !important; font-size: 0.95rem; line-height: 1.5;"><strong style="color: #000000 !important;">Stock:</strong> Mide el esfuerzo por mantener un resultado o nivel deseado en un instante.</li>
+                    <li style="color: #000000 !important; font-size: 0.95rem; line-height: 1.5;"><strong style="color: #000000 !important;">Capacidad:</strong> Avance porcentual restando la línea base directamente del total de la meta.</li>
+                    <li style="color: #000000 !important; font-size: 0.95rem; line-height: 1.5;"><strong style="color: #000000 !important;">Reducción:</strong> Esfuerzo orientado a disminuir un valor inicial indeseado frente a su línea base.</li>
                 </ul>
             `
         },
         unidad: {
             title: "Unidad de Medida",
             body: `
-                <p>Es la recomendación de la magnitud o unidad en la que se cuantifica el indicador:</p>
-                <ul style="margin-left: 1.2rem; margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                    <li><strong>Porcentaje (%):</strong> Relación proporcional entre dos variables homogéneas (Ej. % de cobertura).</li>
-                    <li><strong>Tasa:</strong> Relación de frecuencia de un evento respecto a una población expuesta en un periodo (Ej. Tasa de mortalidad por 100,000 hab).</li>
-                    <li><strong>Número absoluto:</strong> Conteo simple de elementos o productos entregados (Ej. Número de escuelas construidas).</li>
-                    <li><strong>Promedio:</strong> Suma de valores dividido entre la cantidad de elementos (Ej. Promedio de horas de atención).</li>
+                <p style="color: #000000 !important; font-size: 1rem; line-height: 1.6;">Es la recomendación de la magnitud o unidad en la que se cuantifica el indicador:</p>
+                <ul style="margin-left: 1.2rem; margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.5rem; color: #000000 !important; list-style-type: disc;">
+                    <li style="color: #000000 !important; font-size: 0.95rem; line-height: 1.5;"><strong style="color: #000000 !important;">Porcentaje (%):</strong> Relación proporcional entre dos variables homogéneas (Ej. % de cobertura).</li>
+                    <li style="color: #000000 !important; font-size: 0.95rem; line-height: 1.5;"><strong style="color: #000000 !important;">Tasa:</strong> Relación de frecuencia de un evento respecto a una población expuesta en un periodo (Ej. Tasa de mortalidad por 100,000 hab).</li>
+                    <li style="color: #000000 !important; font-size: 0.95rem; line-height: 1.5;"><strong style="color: #000000 !important;">Número absoluto:</strong> Conteo simple de elementos o productos entregados (Ej. Número de escuelas construidas).</li>
+                    <li style="color: #000000 !important; font-size: 0.95rem; line-height: 1.5;"><strong style="color: #000000 !important;">Promedio:</strong> Suma de valores dividido entre la cantidad de elementos (Ej. Promedio de horas de atención).</li>
                 </ul>
             `
         }
@@ -312,12 +312,12 @@ Mantén un tono institucional, pedagógico y directo.`;
                 const textData = helpTexts[helpKey];
                 if (textData) {
                     helpModalTitle.innerHTML = `ℹ️ ${textData.title}`;
-                    helpModalTitle.style.color = '#1e293b';
+                    helpModalTitle.style.color = '#000000';
                     helpModalBody.innerHTML = textData.body;
-                    // Forzar el color de texto a negro/gris oscuro directamente desde JS para evitar problemas de caché CSS
-                    helpModalBody.style.color = '#1e293b';
+                    // Forzar el color de texto a negro puro directamente desde JS para evitar problemas de contraste y caché CSS
+                    helpModalBody.style.color = '#000000';
                     helpModalBody.querySelectorAll('p, li, strong, span, ul').forEach(el => {
-                        el.style.color = '#1e293b';
+                        el.style.color = '#000000';
                     });
                     helpModal.classList.add('active');
                 }
