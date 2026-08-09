@@ -82,10 +82,44 @@ Mantén un tono institucional, pedagógico y directo.`;
 
     async function cargarContextoDocumentos() {
         try {
-            // Intento de lectura de archivo local
+            // Si la librería pdf.js está cargada (ideal para leer texto real)
+            if (window.pdfjsLib) {
+                window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+                
+                const archivosPDF = [
+                    '../Documento_base_preguntas_gestion_indicadores.pdf',
+                    '../Indicadores_Gestion_Publica_Preguntas_y_Respuestas.pdf'
+                ];
+                
+                let textoExtraido = '';
+                
+                for (const archivo of archivosPDF) {
+                    try {
+                        const loadingTask = window.pdfjsLib.getDocument(archivo);
+                        const pdf = await loadingTask.promise;
+                        for (let i = 1; i <= pdf.numPages; i++) {
+                            const page = await pdf.getPage(i);
+                            const textContent = await page.getTextContent();
+                            const pageText = textContent.items.map(item => item.str).join(' ').replace(/(\. |\? )/g, '$1\n');
+                            textoExtraido += pageText + '\n';
+                        }
+                    } catch(err) {
+                        console.warn('No se pudo cargar el PDF: ' + archivo, err);
+                    }
+                }
+                
+                if (textoExtraido.length > 100) {
+                    CONTEXTO_DOCUMENTOS = textoExtraido;
+                    console.log("Cerebro local alimentado con PDFs (" + CONTEXTO_DOCUMENTOS.length + " caracteres)");
+                    return; // Éxito
+                }
+            }
+            
+            // Intento de lectura de archivo local (respaldo)
             const response = await fetch('../Documento_base_preguntas_gestion_indicadores.pdf');
             if (!response.ok) throw new Error('No se pudo acceder al archivo local');
             CONTEXTO_DOCUMENTOS = await response.text();
+            
         } catch (e) {
             console.warn("Fallo lectura local:", e.message);
             CONTEXTO_DOCUMENTOS = 'Basa tus respuestas en la metodología de indicadores del DNP y la Cadena de Valor Pública.';
