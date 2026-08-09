@@ -87,6 +87,46 @@ Mantén un tono institucional, pedagógico y directo.`;
                     <li style="color: #000000 !important; font-size: 0.95rem; line-height: 1.5;"><strong style="color: #000000 !important;">Promedio:</strong> Suma de valores dividido entre la cantidad de elementos (Ej. Promedio de horas de atención).</li>
                 </ul>
             `
+        },
+        formula: {
+            title: "Ejemplo de Fórmula Matemática de Variación",
+            body: `
+                <div style="color: #000000 !important; font-family: 'Outfit', sans-serif; text-align: left;">
+                    <p style="color: #000000 !important; margin-bottom: 0.8rem; font-weight: bold; font-size: 1.05rem;">Ficha Técnica del Indicador (Ejemplo DANE):</p>
+                    <ul style="color: #000000 !important; margin-left: 1.2rem; display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem; list-style-type: disc;">
+                        <li style="color: #000000 !important; font-size: 0.9rem;"><strong style="color: #000000 !important;">Nombre del Indicador:</strong> Variación de la Fuerza Laboral Activa en Cartagena.</li>
+                        <li style="color: #000000 !important; font-size: 0.9rem;"><strong style="color: #000000 !important;">Objetivo de Gestión:</strong> Evaluar el crecimiento o contracción del volumen de personas en edad de trabajar que están contratadas o buscando empleo activamente en el distrito.</li>
+                    </ul>
+                    
+                    <div style="background: #f8fafc; padding: 1.2rem; border-radius: 8px; border: 1px solid #cbd5e1; margin-bottom: 1rem; text-align: center; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);">
+                        <span style="font-size: 0.95rem; font-weight: bold; color: #000000 !important; display: block; margin-bottom: 0.8rem;">Fórmula de Cálculo:</span>
+                        
+                        <div style="display: inline-flex; align-items: center; gap: 10px; color: #000000 !important;">
+                            <span style="font-size: 1.1rem; font-weight: bold; color: #000000 !important;">Variación % = </span>
+                            <span style="font-size: 1.4rem; font-weight: 300; color: #000000 !important;">(</span>
+                            <div style="display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; color: #000000 !important;">
+                                <div style="font-size: 1.05rem; color: #000000 !important; font-weight: bold; border-bottom: 2px solid #000000; padding-bottom: 4px; padding-left: 10px; padding-right: 10px; font-family: Georgia, serif;">
+                                    Fuerza Laboral 2024 - Fuerza Laboral 2023
+                                </div>
+                                <div style="font-size: 1.05rem; color: #000000 !important; font-weight: bold; padding-top: 4px; font-family: Georgia, serif;">
+                                    Fuerza Laboral 2023
+                                </div>
+                            </div>
+                            <span style="font-size: 1.4rem; font-weight: 300; color: #000000 !important;">)</span>
+                            <span style="font-size: 1.1rem; font-weight: bold; color: #000000 !important;"> x 100</span>
+                        </div>
+                    </div>
+
+                    <p style="color: #000000 !important; font-style: italic; font-size: 0.85rem; margin-bottom: 1rem; padding-left: 5px; border-left: 3px solid var(--primary);">
+                        (Nota: La "Fuerza Laboral" equivale a la suma de personas ocupadas + desocupadas según la metodología GEIH del DANE).
+                    </p>
+
+                    <ul style="color: #000000 !important; margin-left: 1.2rem; display: flex; flex-direction: column; gap: 0.4rem; font-size: 0.9rem; list-style-type: disc;">
+                        <li style="color: #000000 !important;"><strong style="color: #000000 !important;">Unidad de Medida:</strong> Porcentaje (%) o Puntos Porcentuales (p.p.) si comparas directamente las tasas de participación.</li>
+                        <li style="color: #000000 !important;"><strong style="color: #000000 !important;">Periodicidad:</strong> Anual (o semestral/trimestral utilizando trimestres móviles para Cartagena).</li>
+                    </ul>
+                </div>
+            `
         }
     };
 
