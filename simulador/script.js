@@ -37,6 +37,10 @@ Mantén un tono institucional, pedagógico y directo.`;
         salud1: { preguntaVaga: '¿Cómo va la atención en salud a las embarazadas del sector rural?' },
         edu1: { preguntaVaga: '¿Cómo va la educación rural en la provincia?' },
         seg1: { preguntaVaga: '¿El plan de vigilancia ha funcionado para reducir atracos?' },
+        amb1: { preguntaVaga: '¿Cómo va el medio ambiente?' },
+        movilidad1: { preguntaVaga: '¿La gente sí está usando el nuevo transporte y estamos reduciendo los tiempos de trancón?' },
+        empleo1: { preguntaVaga: '¿El programa sí está sirviendo para que los jóvenes consigan trabajo digno o es plata botada?' },
+        contratos1: { preguntaVaga: '¿Estamos ahorrando dinero al contratar por licitación pública?' },
         salud2: {
             compPoblacion: 'Mujeres gestantes con residencia en zona rural',
             compAtributo: 'Acceso oportuno y completo al control prenatal',
@@ -44,9 +48,42 @@ Mantén un tono institucional, pedagógico y directo.`;
             compReferente: 'Cobertura del año anterior',
             preguntaRefinada: '¿Estamos garantizando una cobertura adecuada y oportuna de controles prenatales a las gestantes de la zona rural del Municipio X durante el año 2026, mejorando frente al año 2025?'
         },
+        edu2: {
+            compPoblacion: 'Estudiantes matriculados en sedes educativas rurales oficiales',
+            compAtributo: 'Retención escolar intra-anual (evitar abandono antes de finalizar el año)',
+            compAmbito: 'Sedes rurales del municipio/provincia, año lectivo en curso',
+            compReferente: 'Meta del plan de desarrollo vigente sobre tasa de deserción',
+            preguntaRefinada: '¿Estamos reteniendo a los estudiantes de las sedes rurales durante el año escolar, frente a la meta del plan de desarrollo?'
+        },
+        seg2: {
+            compPoblacion: 'Habitantes del casco urbano del municipio',
+            compAtributo: 'Incidencia de hurto a personas ajustada por densidad poblacional',
+            compAmbito: 'Casco urbano, trimestre actual vs. mismo trimestre del año anterior',
+            compReferente: 'Tasa del mismo trimestre del año anterior',
+            preguntaRefinada: '¿Está disminuyendo el hurto a personas en el último trimestre, frente al mismo periodo del año anterior?'
+        },
+        amb2: {
+            compPoblacion: 'Hectáreas comprometidas en el plan de reforestación regional',
+            compAtributo: 'Sobrevivencia vegetativa de lo sembrado, no solo la siembra inicial',
+            compAmbito: 'Cuencas hidrográficas de la jurisdicción, verificación a los 12 meses',
+            compReferente: 'Total de hectáreas comprometidas y programadas en el plan',
+            preguntaRefinada: '¿Las hectáreas comprometidas en el plan de reforestación realmente sobreviven, frente a lo programado?'
+        },
         salud4: {
             nombreIndicador: 'Porcentaje de gestantes en zona rural con 4 o más controles prenatales',
             formulaCalculo: '(Gestantes rurales con 4 o más controles / Total de gestantes rurales) * 100'
+        },
+        edu4: {
+            nombreIndicador: 'Tasa de deserción escolar intra-anual en sedes educativas rurales',
+            formulaCalculo: '(N.º estudiantes que abandonan durante el año / N.º matriculados al inicio del año) * 100'
+        },
+        seg4: {
+            nombreIndicador: 'Variación porcentual de la tasa de hurto a personas por cada 10.000 habitantes',
+            formulaCalculo: '((Tasa trimestre actual - Tasa año anterior) / Tasa año anterior) * 100'
+        },
+        amb4: {
+            nombreIndicador: 'Porcentaje de hectáreas reforestadas con sobrevivencia mayor al 80% a los 12 meses',
+            formulaCalculo: '(N.º hectáreas con sobrevivencia >80% verificada / N.º total hectáreas comprometidas) * 100'
         }
     };
 
@@ -607,7 +644,7 @@ Mantén un tono institucional, pedagógico y directo.`;
             state.data.acumulacion = 'Reducción (Se busca que sea menor que la meta)';
             state.data.unidad = 'Tasa / Porcentaje (%)';
             state.data.fuente = 'Sistema Integrado de Matrícula (SIMAT) / Secretaría de Educación';
-        } else if (lowerQuery.includes('seguridad') || lowerQuery.includes('hurto') || lowerQuery.includes('policía')) {
+        } else if (lowerQuery.includes('seguridad') || lowerQuery.includes('hurto') || lowerQuery.includes('policía') || lowerQuery.includes('atraco')) {
             state.data.componentes = { poblacion: `Ciudadanos de ${entity}`, atributo: 'Reducción de hurtos', ambito: `${entity}, último trimestre`, referente: 'Mismo trimestre año anterior' };
             state.data.preguntaRefinada = `¿Está disminuyendo el hurto a los ciudadanos de ${entity} en el último trimestre frente al mismo trimestre del año anterior?`;
             state.data.cadenaValor = 'Impactos';
@@ -617,6 +654,46 @@ Mantén un tono institucional, pedagógico y directo.`;
             state.data.acumulacion = 'Reducción';
             state.data.unidad = 'Tasa por 10.000 habitantes / Variación %';
             state.data.fuente = 'Sistema de Información Estadístico (SIEDCO) de la Policía Nacional';
+        } else if (lowerQuery.includes('ambiente') || lowerQuery.includes('reforestación') || lowerQuery.includes('arbol')) {
+            state.data.componentes = { poblacion: `Hectáreas comprometidas en ${entity}`, atributo: 'Sobrevivencia vegetativa de lo sembrado', ambito: `Cuencas de ${entity}, verificación a los 12 meses`, referente: 'Total programado en el plan' };
+            state.data.preguntaRefinada = `¿Las hectáreas comprometidas en ${entity} realmente sobreviven, frente a lo programado?`;
+            state.data.cadenaValor = 'Resultados';
+            state.data.nombreIndicador = `Porcentaje de hectáreas reforestadas con sobrevivencia mayor al 80% en ${entity}`;
+            state.data.formulaCalculo = '(N.º hectáreas con sobrevivencia >80% / N.º total hectáreas comprometidas) * 100';
+            state.data.tipoCalidad = 'Efectividad';
+            state.data.acumulacion = 'Acumulado';
+            state.data.unidad = 'Porcentaje (%)';
+            state.data.fuente = 'Visitas de verificación en campo, imágenes satelitales';
+        } else if (lowerQuery.includes('movilidad') || lowerQuery.includes('transporte') || lowerQuery.includes('trancón')) {
+            state.data.componentes = { poblacion: `Usuarios del sistema de transporte en ${entity}`, atributo: 'Reducción de tiempos de viaje', ambito: `Rutas principales de ${entity}, semestre actual`, referente: 'Semestre anterior' };
+            state.data.preguntaRefinada = `¿Se están reduciendo los tiempos de viaje de los usuarios del sistema de transporte en ${entity} frente al semestre anterior?`;
+            state.data.cadenaValor = 'Resultados';
+            state.data.nombreIndicador = `Variación porcentual del tiempo promedio de viaje en rutas de transporte masivo en ${entity}`;
+            state.data.formulaCalculo = '((Tiempo promedio viaje actual - Tiempo promedio viaje anterior) / Tiempo promedio viaje anterior) * 100';
+            state.data.tipoCalidad = 'Eficacia (Calidad / Oportunidad)';
+            state.data.acumulacion = 'Reducción';
+            state.data.unidad = 'Porcentaje (%)';
+            state.data.fuente = 'Sistema de recaudo (validadores) / GPS de la flota';
+        } else if (lowerQuery.includes('empleo') || lowerQuery.includes('trabajo') || lowerQuery.includes('jóvenes') || lowerQuery.includes('jovenes')) {
+            state.data.componentes = { poblacion: `Jóvenes beneficiarios de incentivos en ${entity}`, atributo: 'Mantenimiento del empleo formal', ambito: `${entity}, a los 6 meses de contratación`, referente: 'Meta de vinculación' };
+            state.data.preguntaRefinada = `¿Los jóvenes beneficiarios en ${entity} mantienen su trabajo formal después de 6 meses?`;
+            state.data.cadenaValor = 'Resultados';
+            state.data.nombreIndicador = `Porcentaje de jóvenes vinculados formalmente sostenidos a 6 meses en ${entity}`;
+            state.data.formulaCalculo = '(Jóvenes que siguen cotizando a los 6 meses / Total de jóvenes contratados inicialmente) * 100';
+            state.data.tipoCalidad = 'Efectividad';
+            state.data.acumulacion = 'Flujo / Acumulado';
+            state.data.unidad = 'Porcentaje (%)';
+            state.data.fuente = 'Planilla Integrada de Liquidación de Aportes (PILA)';
+        } else if (lowerQuery.includes('contrato') || lowerQuery.includes('licitación') || lowerQuery.includes('licitacion') || lowerQuery.includes('ahorro')) {
+            state.data.componentes = { poblacion: `Procesos de licitación pública en ${entity}`, atributo: 'Ahorro real generado', ambito: `${entity}, vigencia anual`, referente: 'Presupuesto oficial estimado' };
+            state.data.preguntaRefinada = `¿Estamos generando ahorro real en los procesos de licitación pública en ${entity} comparado con el presupuesto planeado?`;
+            state.data.cadenaValor = 'Resultados';
+            state.data.nombreIndicador = `Porcentaje de ahorro real en contrataciones por licitación pública en ${entity}`;
+            state.data.formulaCalculo = '((Presupuesto oficial ajustado - Valor adjudicado) / Presupuesto oficial ajustado) * 100';
+            state.data.tipoCalidad = 'Economía / Eficiencia';
+            state.data.acumulacion = 'Acumulado';
+            state.data.unidad = 'Porcentaje (%)';
+            state.data.fuente = 'SECOP II, estudios de mercado';
         } else {
             // Generic Fallback
             state.data.componentes = { poblacion: `Población objetivo de ${entity}`, atributo: 'Nivel de satisfacción', ambito: `${entity}, periodo actual`, referente: 'Periodo anterior' };
@@ -752,6 +829,12 @@ Mantén un tono institucional, pedagógico y directo.`;
             respuestaIA = "📏 **Criterios CREMA:**\nPara que tu indicador sea excelente debe ser:\n- **C**laro (sin ambigüedades)\n- **R**elevante (pertinente al objetivo)\n- **E**conómico (costo razonable de medir)\n- **M**edible (verificable)\n- **A**decuado (aporta base suficiente).";
         } else if (lowerInput.includes('ejemplo') && (lowerInput.includes('indicador') || lowerInput.includes('formula'))) {
             respuestaIA = "💡 **Ejemplo de indicador:**\n*Nombre:* Tasa de deserción escolar intra-anual.\n*Fórmula:* (Estudiantes que abandonan / Total matriculados) * 100.\n*Cadena de valor:* Resultado.";
+        } else if (lowerInput.includes('movilidad') || lowerInput.includes('transporte') || lowerInput.includes('trancon')) {
+            respuestaIA = "🚌 **Pista - Ejercicio de Movilidad:**\nRecuerda no mezclar indicadores. Es mejor tener uno para **Oferta** (ej: frecuencia de buses, que es un Producto) y otro para el **Efecto** en la gente (ej: tiempos de viaje, que es un Resultado). ¡Busca medir la variación en los minutos de recorrido real usando GPS o datos del validador!";
+        } else if (lowerInput.includes('empleo') || lowerInput.includes('trabajo') || lowerInput.includes('jovenes')) {
+            respuestaIA = "💼 **Pista - Ejercicio de Empleo:**\n¡Ojo con medir solo 'vacantes publicadas'! Eso es apenas producto. Para medir un verdadero resultado (empleo digno y sostenido), usa la Planilla Integrada de Liquidación de Aportes (PILA) para verificar si la persona sigue cotizando 6 meses después de ser contratada.";
+        } else if (lowerInput.includes('contrato') || lowerInput.includes('licitacion') || lowerInput.includes('ahorro')) {
+            respuestaIA = "⚖️ **Pista - Ejercicio de Contratación:**\nPara medir 'ahorro', asegúrate de que no haya sub-presupuestación voluntaria (inflar los presupuestos oficiales). Cruza los datos de adjudicación del SECOP II con verdaderos estudios de mercado. El criterio aquí es la Economía.";
         } else {
             // 2. Búsqueda profunda en los documentos locales (CONTEXTO_DOCUMENTOS)
             let matchedLines = [];
