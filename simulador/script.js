@@ -189,6 +189,73 @@ Mantén un tono institucional, pedagógico y directo.`;
         'learning': { title: '📚 Centro de Aprendizaje Metodológico', desc: 'Documentación oficial y guías para la construcción de indicadores.' }
     };
 
+    // Configuración del Asistente Virtual
+    const hoverHints = {
+        '#preguntaVaga': 'Escribe aquí la inquietud o problema exactamente como lo plantea el ciudadano o el directivo, sin tecnicismos.',
+        '#compPoblacion': '¿Sobre quién o qué se pregunta? Ej: estudiantes, viviendas, gestantes, hectáreas.',
+        '#compAtributo': '¿Qué característica de esa población te interesa? Ej: cobertura, retención, sobrevivencia.',
+        '#compAmbito': '¿Dónde y en qué periodo ocurre? Ej: Municipio X, vigencia actual.',
+        '#compReferente': '¿Frente a qué evalúas? Ej: la meta del plan de desarrollo, o el año anterior.',
+        '#preguntaRefinada': 'Aquí debes redactar la pregunta final uniendo los 4 componentes (población, atributo, ámbito, referente).',
+        '.vc-card[data-vc="insumos"]': 'Los insumos son los recursos financieros, humanos y físicos que tienes disponibles. ¡No suelen ser el fin principal!',
+        '.vc-card[data-vc="actividades"]': 'Las actividades son los procesos y tareas realizadas (como reuniones, talleres). Contar actividades no mide si hubo un cambio real.',
+        '.vc-card[data-vc="productos"]': 'Los productos son los bienes o servicios entregados (ej. raciones, kits). Miden tu esfuerzo operativo.',
+        '.vc-card[data-vc="resultados"]': '¡Excelente! Los resultados miden el cambio real en el comportamiento o condición de la población. Es lo más recomendado.',
+        '.vc-card[data-vc="impactos"]': 'Los impactos miden transformaciones estructurales a largo plazo (ej. tasa de mortalidad, pobreza). Son muy difíciles de atribuir a un solo proyecto.',
+        '#nombreIndicador': 'Recuerda la regla: Objeto de medición + Condición deseada (en participio) + Contexto descriptivo.',
+        '#formulaCalculo': 'La fórmula más común es (Lo que se logró / La población total de referencia) * 100.',
+        '#analyzeStep1Btn': 'Haz clic aquí para que valide si tu pregunta tiene sentido.',
+        '#magicGenerateBtn': '¡Magia! Haz clic aquí y generaré toda la ficha técnica por ti basándome en lo que escribas.',
+        '#analyzeStep2Btn': 'Revisaré si los 4 componentes están completos.',
+        '#analyzeStep3Btn': 'Validaré el eslabón que elegiste.',
+        '#analyzeStep4Btn': 'Aplicaré la lista de chequeo CREMAS a tu fórmula y nombre.',
+        'span[data-concept="nombre"]': 'El nombre resume todo: qué mides y cuál es la condición deseada.',
+        'span[data-concept="pregunta"]': 'Esta es la pregunta final consolidada que sirve de brújula a tu indicador.',
+        'span[data-concept="cadena"]': 'Es vital tener claro en qué eslabón (Insumo, Actividad, Producto, Resultado o Impacto) te encuentras.',
+        'span[data-concept="calidad"]': 'Define si mides Eficacia (logros), Eficiencia (recursos/tiempo), Economía (ahorro) o Calidad (satisfacción/estándares).',
+        'span[data-concept="acumulacion"]': '¿Es Acumulativo (se suman los periodos) o Flujo/Stock (solo cuenta el periodo actual)?',
+        'span[data-concept="formula"]': 'La expresión matemática. Verifica que el numerador y denominador tengan sentido juntos.',
+        'span[data-concept="unidad"]': '¿Es un Porcentaje (%), Tasa, Número absoluto o Pesos ($)?',
+        'span[data-concept="fuente"]': 'De dónde sale la información. Debe ser una fuente oficial confiable (DANE, ministerios, encuestas propias).',
+        '.pizarra-step[data-step="1"]': 'Aquí empezamos con el dolor de cabeza real. Escribe lo que dice el directivo o el ciudadano sin filtrar nada.',
+        '.pizarra-step[data-step="2"]': 'Tomamos ese dolor y lo partimos en 4 (Población, Atributo, Ámbito, Referente) y lo ubicamos en la Cadena de Valor.',
+        '.pizarra-step[data-step="3"]': 'Finalmente, le aplicamos la lista CREMAS para asegurar que sea Claro, Relevante, Económico, Medible, Adecuado y Sensible.',
+        '.pizarra-func[data-func="arboles"]': 'Usa el lienzo para dibujar cajas y flechas. Identifica las causas (raíces) y los efectos (ramas) antes de crear el indicador.',
+        '.pizarra-func[data-func="mapeo"]': 'Dibuja cómo fluye tu proyecto: Insumo → Actividad → Producto → Resultado.',
+        '.pizarra-func[data-func="formulas"]': 'Usa el lápiz para ensayar cuál debería ser el numerador y el denominador antes de pasarlo en limpio.',
+        '.pizarra-func[data-func="lluvia"]': 'Un espacio libre para anotar todas las palabras clave de tu indicador y agruparlas hasta que tengan sentido.',
+        '.diag-node[data-node="problema"]': 'El problema central es nuestro punto de partida. Todo lo que hagamos abajo debe apuntar a resolver esto.',
+        '.diag-node[data-node="insumos"]': 'Aquí va la plata, la gente y las oficinas. Es lo que necesitas para arrancar.',
+        '.diag-node[data-node="actividades"]': 'Las tareas del día a día: reuniones, viajes, contrataciones, capacitaciones. ¡No midas solo esto!',
+        '.diag-node[data-node="resultados"]': 'El objetivo de oro. Si las actividades funcionaron, el problema original (arriba) debe empezar a desaparecer.'
+    };
+
+    function initHoverAssistant() {
+        const assistant = document.getElementById('hover-assistant');
+        const bubble = document.getElementById('assistant-bubble');
+        if (!assistant || !bubble) return;
+
+        let hideTimeout;
+
+        // Añadir listeners a los elementos con hint
+        Object.keys(hoverHints).forEach(selector => {
+            const elements = document.querySelectorAll(selector);
+            elements.forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    clearTimeout(hideTimeout);
+                    bubble.innerHTML = hoverHints[selector];
+                    assistant.classList.remove('hidden');
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    hideTimeout = setTimeout(() => {
+                        assistant.classList.add('hidden');
+                    }, 500); // Ocultar después de medio segundo
+                });
+            });
+        });
+    }
+
     function init() {
         loadData();
         bindEvents();
@@ -197,6 +264,7 @@ Mantén un tono institucional, pedagógico y directo.`;
         cargarContextoDocumentos();
         initParticles();
         updateGlowListeners();
+        initHoverAssistant();
     }
 
     function initParticles() {
@@ -553,19 +621,38 @@ Mantén un tono institucional, pedagógico y directo.`;
     }
 
     function loadExample(key) {
-        const ex = examples[key];
-        if (!ex) return;
-        if (ex.preguntaVaga) state.data.preguntaVaga = ex.preguntaVaga;
-        if (ex.compPoblacion) state.data.componentes.poblacion = ex.compPoblacion;
-        if (ex.compAtributo) state.data.componentes.atributo = ex.compAtributo;
-        if (ex.compAmbito) state.data.componentes.ambito = ex.compAmbito;
-        if (ex.compReferente) state.data.componentes.referente = ex.compReferente;
-        if (ex.preguntaRefinada) state.data.preguntaRefinada = ex.preguntaRefinada;
-        if (ex.nombreIndicador) state.data.nombreIndicador = ex.nombreIndicador;
-        if (ex.formulaCalculo) state.data.formulaCalculo = ex.formulaCalculo;
+        const prefix = key.replace(/[0-9]/g, ''); // e.g. 'edu1' -> 'edu'
+        
+        // Load all data matching this prefix
+        Object.keys(examples).forEach(k => {
+            if (k.startsWith(prefix)) {
+                const ex = examples[k];
+                if (ex.preguntaVaga) state.data.preguntaVaga = ex.preguntaVaga;
+                if (ex.compPoblacion) state.data.componentes.poblacion = ex.compPoblacion;
+                if (ex.compAtributo) state.data.componentes.atributo = ex.compAtributo;
+                if (ex.compAmbito) state.data.componentes.ambito = ex.compAmbito;
+                if (ex.compReferente) state.data.componentes.referente = ex.compReferente;
+                if (ex.preguntaRefinada) state.data.preguntaRefinada = ex.preguntaRefinada;
+                if (ex.nombreIndicador) state.data.nombreIndicador = ex.nombreIndicador;
+                if (ex.formulaCalculo) state.data.formulaCalculo = ex.formulaCalculo;
+            }
+        });
+
+        // Set an appropriate Cadena de Valor based on the example
+        if (prefix === 'salud') state.data.cadenaValor = 'productos';
+        else if (prefix === 'edu' || prefix === 'seg' || prefix === 'amb') state.data.cadenaValor = 'resultados';
+        else state.data.cadenaValor = 'actividades';
+
         saveState();
         populateInputs();
-        addChat('IA', `He cargado un ejemplo de ${key}. Puedes modificarlo o avanzar al siguiente paso.`);
+        
+        // Ensure UI visually updates the radio buttons for step 3 if currently on step 3 or globally
+        if (state.data.cadenaValor) {
+            const radio = document.querySelector(`input[name="cadenaValor"][value="${state.data.cadenaValor}"]`);
+            if (radio) radio.checked = true;
+        }
+
+        addChat('IA', `He cargado el caso completo de ejemplo para que veas cómo se conectan todos los pasos. Puedes revisar cada paso, modificar los datos o avanzar al final.`);
     }
 
     function updateFichaTecnica() {

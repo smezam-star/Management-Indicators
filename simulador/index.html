@@ -218,28 +218,28 @@
                     <p class="instruction-text">Selecciona en qué eslabón de la Cadena de Valor Pública se ubica el
                         objetivo a medir.</p>
                     <div class="value-chain">
-                        <label class="vc-card">
+                        <label class="vc-card" data-vc="insumos">
                             <input type="radio" name="cadenaValor" value="Insumos">
                             <div class="vc-content">
                                 <h3>Insumos</h3>
                                 <p>Recursos financieros, físicos o humanos asignados.</p>
                             </div>
                         </label>
-                        <label class="vc-card">
+                        <label class="vc-card" data-vc="actividades">
                             <input type="radio" name="cadenaValor" value="Actividades">
                             <div class="vc-content">
                                 <h3>Actividades</h3>
                                 <p>Procesos intermedios, tareas operativas, jornadas.</p>
                             </div>
                         </label>
-                        <label class="vc-card">
+                        <label class="vc-card" data-vc="productos">
                             <input type="radio" name="cadenaValor" value="Productos">
                             <div class="vc-content">
                                 <h3>Productos</h3>
                                 <p>Bienes o servicios tangibles entregados (Ej. 100 raciones entregadas).</p>
                             </div>
                         </label>
-                        <label class="vc-card">
+                        <label class="vc-card" data-vc="resultados">
                             <input type="radio" name="cadenaValor" value="Resultados">
                             <div class="vc-content">
                                 <h3>Resultados <span
@@ -248,7 +248,7 @@
                                 <p>Cambios en acceso, comportamiento o estado de la población.</p>
                             </div>
                         </label>
-                        <label class="vc-card">
+                        <label class="vc-card" data-vc="impactos">
                             <input type="radio" name="cadenaValor" value="Impactos">
                             <div class="vc-content">
                                 <h3>Impactos</h3>
@@ -323,27 +323,27 @@
                     </div>
 
                     <div class="ficha-tecnica">
-                        <div class="ficha-row"><span class="ficha-label">Nombre:</span> <span id="ft-nombre">-</span>
+                        <div class="ficha-row"><span class="ficha-label" data-concept="nombre">Nombre:</span> <span id="ft-nombre">-</span>
                         </div>
-                        <div class="ficha-row"><span class="ficha-label">Pregunta:</span> <span
+                        <div class="ficha-row"><span class="ficha-label" data-concept="pregunta">Pregunta:</span> <span
                                 id="ft-pregunta">-</span></div>
-                        <div class="ficha-row"><span class="ficha-label">Cadena Valor:</span> <span
+                        <div class="ficha-row"><span class="ficha-label" data-concept="cadena">Cadena Valor:</span> <span
                                 id="ft-cadena">-</span></div>
                         <div class="ficha-row">
-                            <span class="ficha-label">Tipo Calidad: <button class="info-help-btn" data-help="calidad">ℹ️</button></span> 
+                            <span class="ficha-label" data-concept="calidad">Tipo Calidad: <button class="info-help-btn" data-help="calidad">ℹ️</button></span> 
                             <span id="ft-calidad" class="ia-suggestion">Pendiente</span>
                         </div>
                         <div class="ficha-row">
-                            <span class="ficha-label">Acumulación: <button class="info-help-btn" data-help="acumulacion">ℹ️</button></span> 
+                            <span class="ficha-label" data-concept="acumulacion">Acumulación: <button class="info-help-btn" data-help="acumulacion">ℹ️</button></span> 
                             <span id="ft-acumulacion" class="ia-suggestion">Pendiente</span>
                         </div>
-                        <div class="ficha-row"><span class="ficha-label">Fórmula:</span> <span id="ft-formula">-</span>
+                        <div class="ficha-row"><span class="ficha-label" data-concept="formula">Fórmula:</span> <span id="ft-formula">-</span>
                         </div>
                         <div class="ficha-row">
-                            <span class="ficha-label">Unidad: <button class="info-help-btn" data-help="unidad">ℹ️</button></span> 
+                            <span class="ficha-label" data-concept="unidad">Unidad: <button class="info-help-btn" data-help="unidad">ℹ️</button></span> 
                             <span id="ft-unidad" class="ia-suggestion">Pendiente</span>
                         </div>
-                        <div class="ficha-row"><span class="ficha-label">Fuente Oficial:</span> <span
+                        <div class="ficha-row"><span class="ficha-label" data-concept="fuente">Fuente Oficial:</span> <span
                                 class="tag-warning">[VERIFICAR]</span> <span id="ft-fuente"
                                 class="ia-suggestion">Sugerida por IA</span></div>
                     </div>
@@ -352,6 +352,8 @@
                         <button class="primary-btn" id="downloadPdfBtn" style="background: var(--secondary); border: none; box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3);">📥 Descargar Ficha PDF</button>
                     </div>
                 </div>
+
+
 
                 <!-- View: Learning Center -->
                 <div class="view-content" id="view-learning">
@@ -580,12 +582,64 @@
 
     <!-- Whiteboard Modal -->
     <div class="whiteboard-modal" id="whiteboardModal">
-        <div class="whiteboard-modal-content">
-            <div class="whiteboard-header">
-                <h3>🖌️ Pizarra Colaborativa</h3>
-                <button class="whiteboard-close" id="closeWhiteboardBtn">✖ Cerrar Pizarra</button>
+        <div class="whiteboard-modal-content" style="display: flex; flex-direction: row; gap: 1rem; width: 95%; max-width: 1400px; padding: 1rem; background: #0f172a;">
+            
+            <!-- Left Side: Guía del Taller -->
+            <div class="whiteboard-guide" style="width: 35%; max-width: 400px; overflow-y: auto; background: #1e293b; padding: 1.5rem; border-radius: 12px; border: 2px solid #475569; color: white;">
+                <h2 style="color: #fcd34d; margin-bottom: 1rem; text-align: center; border-bottom: 2px dashed rgba(255,255,255,0.2); padding-bottom: 0.5rem; font-size: 1.5rem;">🎨 Guía del Taller</h2>
+                
+                <h3 style="color: #6ee7b7; margin-bottom: 1rem; font-size: 1.1rem;">Pasos a seguir:</h3>
+                <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 1rem;">
+                    <li class="pizarra-step" data-step="1" style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 8px; cursor: default; border-left: 4px solid #6ee7b7;">
+                        <strong>1. Identificar la Pregunta Vaga</strong>
+                        <p style="font-size: 0.85rem; margin-top: 0.5rem; opacity: 0.8;">Escuchar la necesidad del directivo o ciudadano.</p>
+                    </li>
+                    <li class="pizarra-step" data-step="2" style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 8px; cursor: default; border-left: 4px solid #6ee7b7;">
+                        <strong>2. Componentes y Cadena</strong>
+                        <p style="font-size: 0.85rem; margin-top: 0.5rem; opacity: 0.8;">Estructurar las 4 partes y ubicar el objetivo.</p>
+                    </li>
+                    <li class="pizarra-step" data-step="3" style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 8px; cursor: default; border-left: 4px solid #6ee7b7;">
+                        <strong>3. Fórmula CREMAS</strong>
+                        <p style="font-size: 0.85rem; margin-top: 0.5rem; opacity: 0.8;">Matematizar y validar con la lista de chequeo.</p>
+                    </li>
+                </ul>
+
+                <h3 style="color: #f472b6; margin-top: 2rem; margin-bottom: 1rem; font-size: 1.1rem;">¿Qué hacer aquí?</h3>
+                <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.8rem;">
+                    <li class="pizarra-func" data-func="arboles" style="background: rgba(244,114,182,0.1); padding: 0.8rem; border-radius: 8px; border-left: 4px solid #f472b6; cursor: default;">
+                        <strong>Árboles de Problemas</strong>
+                    </li>
+                    <li class="pizarra-func" data-func="mapeo" style="background: rgba(244,114,182,0.1); padding: 0.8rem; border-radius: 8px; border-left: 4px solid #f472b6; cursor: default;">
+                        <strong>Mapeo de Cadena de Valor</strong>
+                    </li>
+                    <li class="pizarra-func" data-func="formulas" style="background: rgba(244,114,182,0.1); padding: 0.8rem; border-radius: 8px; border-left: 4px solid #f472b6; cursor: default;">
+                        <strong>Borrador de Fórmulas</strong>
+                    </li>
+                    <li class="pizarra-func" data-func="lluvia" style="background: rgba(244,114,182,0.1); padding: 0.8rem; border-radius: 8px; border-left: 4px solid #f472b6; cursor: default;">
+                        <strong>Lluvia de Ideas Libre</strong>
+                    </li>
+                </ul>
+
+                <h3 style="color: #93c5fd; margin-top: 2rem; margin-bottom: 1rem; font-size: 1.1rem;">Ejemplo: Árbol a Cadena</h3>
+                <div class="pizarra-diagram" style="display: flex; flex-direction: column; gap: 0.8rem; align-items: center;">
+                    <div class="diag-node" data-node="problema" style="background: rgba(239, 68, 68, 0.2); border: 2px solid #ef4444; padding: 0.8rem 1.5rem; border-radius: 20px; width: 90%; text-align: center; cursor: default;">Problema: Alta deserción rural</div>
+                    <div style="color: #94a3b8;">↓</div>
+                    <div class="diag-node" data-node="insumos" style="background: rgba(168, 85, 247, 0.2); border: 2px solid #a855f7; padding: 0.8rem 1.5rem; border-radius: 8px; width: 90%; text-align: center; cursor: default;">Insumo: Presupuesto</div>
+                    <div style="color: #94a3b8;">↓</div>
+                    <div class="diag-node" data-node="actividades" style="background: rgba(168, 85, 247, 0.2); border: 2px solid #a855f7; padding: 0.8rem 1.5rem; border-radius: 8px; width: 90%; text-align: center; cursor: default;">Actividad: Transporte</div>
+                    <div style="color: #94a3b8;">↓</div>
+                    <div class="diag-node" data-node="resultados" style="background: rgba(16, 185, 129, 0.2); border: 2px solid #10b981; padding: 0.8rem 1.5rem; border-radius: 8px; width: 90%; text-align: center; box-shadow: 0 0 15px rgba(16, 185, 129, 0.4); cursor: default;">Resultado: Disminución</div>
+                </div>
             </div>
-            <iframe src="https://excalidraw.com/" frameborder="0" class="whiteboard-iframe"></iframe>
+
+            <!-- Right Side: Excalidraw -->
+            <div style="flex-grow: 1; position: relative; border-radius: 12px; overflow: hidden;">
+                <div class="whiteboard-header" style="position: absolute; top: 0; right: 0; background: rgba(15, 23, 42, 0.8); z-index: 10; padding: 0.5rem; border-bottom-left-radius: 12px;">
+                    <button class="whiteboard-close" id="closeWhiteboardBtn" style="margin: 0;">✖ Cerrar Pizarra</button>
+                </div>
+                <iframe src="https://excalidraw.com/" frameborder="0" class="whiteboard-iframe" style="width: 100%; height: 100%;"></iframe>
+            </div>
+
         </div>
     </div>
 
@@ -605,6 +659,14 @@
     <script src="knowledge.js"></script>
     <script src="preguntas_frecuentes.js"></script>
     <script src="script.js"></script>
+
+    <!-- Hover Assistant -->
+    <div id="hover-assistant" class="hover-assistant hidden">
+        <div class="assistant-bubble" id="assistant-bubble">
+            ¡Hola! Pasa el mouse sobre los elementos y te ayudaré.
+        </div>
+        <img src="assets/pato.png" class="assistant-avatar duck-avatar" alt="Asistente Pato">
+    </div>
 </body>
 
 </html>
