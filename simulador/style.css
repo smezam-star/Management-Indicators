@@ -1897,3 +1897,328 @@ img.duck-avatar {
     background: white;
     font-size: initial; /* Override emoji font size */
 }
+
+/* ================================================================
+   AI SEARCH MODULE — Dark/Glass theme adaptation
+   ================================================================ */
+
+/* Sidebar button */
+.btn-search-ai-sim {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Outfit', sans-serif;
+    letter-spacing: 0.02em;
+    position: relative;
+    overflow: hidden;
+}
+.btn-search-ai-sim::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+.btn-search-ai-sim:hover::before { opacity: 1; }
+.btn-search-ai-sim:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.45);
+}
+.ai-badge-sim {
+    margin-left: auto;
+    font-size: 0.58rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    background: rgba(255,255,255,0.2);
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+}
+
+/* Backdrop */
+.sim-search-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 500;
+    animation: simFadeIn 0.2s ease;
+}
+@keyframes simFadeIn { from { opacity:0; } to { opacity:1; } }
+
+/* Panel */
+.sim-search-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 420px;
+    height: 100vh;
+    background: rgba(10, 37, 64, 0.97);
+    backdrop-filter: blur(20px);
+    border-left: 1px solid rgba(255,255,255,0.12);
+    box-shadow: -12px 0 50px rgba(0,0,0,0.5);
+    z-index: 600;
+    display: flex;
+    flex-direction: column;
+    animation: simSlideIn 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+@keyframes simSlideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
+.sim-search-panel.hidden { display: none !important; }
+.sim-search-backdrop.hidden { display: none !important; }
+
+/* Header */
+.sim-search-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 1.5rem;
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    flex-shrink: 0;
+}
+.sim-search-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 0.02em;
+}
+.sim-close-btn {
+    background: rgba(255,255,255,0.15);
+    border: none;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+.sim-close-btn:hover { background: rgba(255,255,255,0.3); }
+
+/* Messages */
+.sim-chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+    scroll-behavior: smooth;
+}
+.sim-chat-messages::-webkit-scrollbar { width: 4px; }
+.sim-chat-messages::-webkit-scrollbar-track { background: transparent; }
+.sim-chat-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 99px; }
+
+.sim-msg {
+    display: flex;
+    gap: 0.7rem;
+    align-items: flex-start;
+    animation: simMsgIn 0.3s ease forwards;
+}
+@keyframes simMsgIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+.sim-msg-user { flex-direction: row-reverse; }
+
+.sim-avatar {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+}
+
+.sim-bubble {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 0 1rem 1rem 1rem;
+    padding: 0.85rem 1rem;
+    max-width: 82%;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--text-main);
+}
+.sim-msg-user .sim-bubble {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border-color: transparent;
+    border-radius: 1rem 0 1rem 1rem;
+    color: white;
+}
+.sim-bubble p { margin-bottom: 0.4rem; }
+.sim-bubble p:last-child { margin-bottom: 0; }
+.sim-bubble strong { color: var(--primary); }
+.sim-msg-user .sim-bubble strong { color: rgba(255,255,255,0.9); }
+
+/* Suggestion chips */
+.sim-suggestions { display: flex; flex-direction: column; gap: 0.35rem; margin-top: 0.65rem; }
+.sim-chip {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 99px;
+    padding: 0.35rem 0.8rem;
+    font-size: 0.78rem;
+    cursor: pointer;
+    color: var(--accent);
+    font-weight: 600;
+    text-align: left;
+    transition: all 0.25s;
+    font-family: 'Outfit', sans-serif;
+}
+.sim-chip:hover {
+    background: var(--secondary);
+    border-color: var(--secondary);
+    color: white;
+    transform: translateX(4px);
+}
+
+/* Typing indicator */
+.sim-typing {
+    display: flex !important;
+    align-items: center;
+    gap: 5px;
+    padding: 0.7rem 1rem !important;
+}
+.sim-typing span {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    display: inline-block;
+    animation: simBounce 1.2s ease-in-out infinite;
+}
+.sim-typing span:nth-child(2) { animation-delay: 0.2s; }
+.sim-typing span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes simBounce { 0%,100% { transform:translateY(0); opacity:0.4; } 50% { transform:translateY(-7px); opacity:1; } }
+
+/* Input area */
+.sim-chat-input {
+    display: flex;
+    gap: 0.5rem;
+    padding: 1rem 1.25rem;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.03);
+    flex-shrink: 0;
+}
+#search-input {
+    flex: 1;
+    padding: 0.7rem 1rem;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 99px;
+    background: rgba(255,255,255,0.07);
+    color: var(--text-main);
+    font-size: 0.88rem;
+    outline: none;
+    transition: all 0.25s;
+    font-family: 'Outfit', sans-serif;
+}
+#search-input::placeholder { color: rgba(255,255,255,0.35); }
+#search-input:focus {
+    border-color: var(--secondary);
+    background: rgba(99,102,241,0.12);
+    box-shadow: 0 0 0 3px rgba(99,102,241,0.2);
+}
+.sim-send-btn {
+    width: 2.6rem; height: 2.6rem;
+    border-radius: 50%;
+    border: none;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.25s;
+    flex-shrink: 0;
+}
+.sim-send-btn:hover { transform: scale(1.1); box-shadow: 0 4px 15px rgba(99,102,241,0.5); }
+.sim-send-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* Source badge */
+.sim-src-badge {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 0.18rem 0.5rem;
+    border-radius: 99px;
+    background: color-mix(in srgb, var(--sc) 20%, transparent);
+    color: var(--sc);
+    border: 1px solid color-mix(in srgb, var(--sc) 30%, transparent);
+    margin-bottom: 0.4rem;
+}
+
+/* Source link */
+.sim-src-link {
+    display: inline-block;
+    margin-top: 0.5rem;
+    font-size: 0.76rem;
+    color: var(--accent);
+    text-decoration: none;
+    background: rgba(56,189,248,0.1);
+    padding: 0.2rem 0.55rem;
+    border-radius: 99px;
+    border: 1px solid rgba(56,189,248,0.2);
+    transition: all 0.2s;
+}
+.sim-src-link:hover { background: rgba(56,189,248,0.2); }
+
+/* Alt sources */
+.sim-alt { margin-top: 0.65rem; }
+
+/* Engine bar */
+.sim-eng-bar {
+    margin-top: 0.75rem;
+    padding-top: 0.65rem;
+    border-top: 1px dashed rgba(255,255,255,0.1);
+}
+.sim-eng-label {
+    display: block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 0.4rem;
+}
+.sim-eng-row { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+
+.sim-eng-btn, .sim-alt-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 99px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-decoration: none;
+    background: color-mix(in srgb, var(--ec, var(--sc)) 15%, rgba(255,255,255,0.05));
+    color: color-mix(in srgb, var(--ec, var(--sc)) 80%, white);
+    border: 1px solid color-mix(in srgb, var(--ec, var(--sc)) 25%, transparent);
+    transition: all 0.2s;
+    white-space: nowrap;
+    font-family: 'Outfit', sans-serif;
+}
+.sim-eng-btn:hover, .sim-alt-chip:hover {
+    background: var(--ec, var(--sc));
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px color-mix(in srgb, var(--ec, var(--sc)) 40%, transparent);
+}
+
+@media (max-width: 768px) {
+    .sim-search-panel { width: 100%; }
+}
+

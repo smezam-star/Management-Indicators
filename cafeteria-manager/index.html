@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cafetería Manager PRO - Logística Universitaria</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .toggle-switch { position: relative; display: inline-block; width: 40px; height: 20px; }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 20px; }
+        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 2px; bottom: 2px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--secondary); }
+        input:checked + .slider:before { transform: translateX(20px); }
+        .badge { padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
+        .badge-coffee { background: #7c2d12; color: #fff; }
+        .badge-water { background: #0284c7; color: #fff; }
+        .badge-other { background: #475569; color: #fff; }
+        .settings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: start; }
+        .btn-success { background-color: #10B981; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: var(--radius-md); font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem; transition: all 0.3s ease; }
+        .btn-success:hover { background-color: #059669; transform: translateY(-2px); box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.3); }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i data-lucide="coffee"></i>
+                <span>CafeManager</span>
+            </div>
+            <nav>
+                <button class="nav-btn active" data-view="dashboard"><i data-lucide="layout-dashboard"></i> Dashboard</button>
+                <button class="nav-btn" data-view="cohorts"><i data-lucide="calendar"></i> Programación / Calendario</button>
+                <button class="nav-btn" data-view="inventory"><i data-lucide="package"></i> Costos al por Mayor</button>
+                <button class="nav-btn" data-view="simulator"><i data-lucide="test-tube"></i> Simulador Analítico</button>
+                <button class="nav-btn" data-view="history"><i data-lucide="history"></i> Historial de Cierres</button>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="topbar">
+                <h2 id="page-title">Panel de Control</h2>
+                <div class="date-display" id="currentDate"></div>
+            </header>
+
+            <!-- Views -->
+            <div id="view-dashboard" class="view active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon icon-blue"><i data-lucide="dollar-sign"></i></div>
+                        <div class="stat-details">
+                            <h3>Balance Presupuestal</h3>
+                            <p id="dash-budget-status">$0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon icon-green"><i data-lucide="users"></i></div>
+                        <div class="stat-details">
+                            <h3>Estudiantes Activos</h3>
+                            <p id="dash-total-students">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon icon-purple"><i data-lucide="briefcase"></i></div>
+                        <div class="stat-details">
+                            <h3>Profesores Activos</h3>
+                            <p id="dash-total-professors">0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-grid">
+                    <!-- Configuración Logística -->
+                    <div class="card premium-card">
+                        <div class="card-header">
+                            <i data-lucide="settings"></i>
+                            <h3>Configuración Logística</h3>
+                        </div>
+                        <p class="description" style="margin-bottom:1rem;">Define un margen de imprevistos para evitar desabastecimientos.</p>
+                        <div class="form-group" style="margin-bottom:0;">
+                            <label>Margen de Desperdicio / Holgura (%)</label>
+                            <input type="number" id="setting-margin" min="0" max="100" value="5" style="width:100px; display:inline-block; margin-right:0.5rem;">
+                            <button id="btn-save-settings" class="btn-secondary" style="padding:0.5rem 1rem;">Aplicar Margen</button>
+                        </div>
+                    </div>
+
+                    <!-- Ejecución de Fin de Semana -->
+                    <div class="card premium-card" style="border-left:4px solid #10B981;">
+                        <div class="card-header" style="color:#10B981;">
+                            <i data-lucide="check-circle"></i>
+                            <h3>Cierre de Fin de Semana</h3>
+                        </div>
+                        <p class="description" style="margin-bottom:1rem;">Resta las proyecciones (con holgura) de tu inventario físico real y limpia la programación.</p>
+                        <button id="btn-close-weekend" class="btn-success full-width" style="justify-content:center;">
+                            <i data-lucide="power"></i> Ejecutar Cierre y Descontar Inventario
+                        </button>
+                    </div>
+                </div>
+
+                <div class="dashboard-details" style="margin-top:2rem;">
+                    
+                    <!-- 🤖 Asistente Logístico y Proyecciones -->
+                    <div class="card premium-card" style="margin-bottom:2rem; border-left: 4px solid #8B5CF6;">
+                        <div class="card-header" style="color: #8B5CF6;">
+                            <i data-lucide="bot"></i>
+                            <h3>Asistente Logístico Inteligente</h3>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1rem;">
+                            <!-- Panel 1: Alertas -->
+                            <div>
+                                <h4 style="margin-bottom: 0.5rem; color:var(--text-main); font-size:0.95rem;">Alertas de Escasez y Sugerencias de Compra</h4>
+                                <div id="assistant-alerts" style="background:#F8FAFC; padding:1rem; border-radius:var(--radius-md); font-size:0.9rem; min-height:100px;">
+                                    <!-- Populated by JS -->
+                                </div>
+                            </div>
+                            <!-- Panel 2: Proyección Mensual -->
+                            <div>
+                                <h4 style="margin-bottom: 0.5rem; color:var(--text-main); font-size:0.95rem;">Proyección Financiera Mensual (4 Semanas)</h4>
+                                <div style="background:#F8FAFC; padding:1rem; border-radius:var(--radius-md); font-size:0.9rem; min-height:100px;">
+                                    <p style="color:var(--text-muted); margin-bottom: 0.5rem;">Basado en la configuración de grupos actualmente activos:</p>
+                                    <div style="display:flex; justify-content:space-between; margin-bottom: 0.5rem; padding-bottom:0.5rem; border-bottom:1px solid #E2E8F0;">
+                                        <span>Costo Estimado 1 Mes:</span>
+                                        <strong id="assistant-month-cost" style="color:#8B5CF6; font-size:1.1rem;">$0</strong>
+                                    </div>
+                                    <p style="color:var(--text-muted); font-size:0.8rem; line-height:1.4;">Reserva sugerida para compras mensuales. Asume que la logística de este fin de semana se repetirá 4 veces.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="campus-breakdown">
+                        <h3 class="section-title" style="display:flex;align-items:center;gap:0.5rem;margin-bottom:1rem;font-size:1.1rem;color:var(--text-main);"><i data-lucide="map-pin" style="color:var(--primary)"></i> Distribución de Estudiantes por Sedes (Fin de Semana)</h3>
+                        <div class="campus-grid" style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:1rem;margin-bottom:2rem;">
+                            <div class="campus-card card" style="text-align:center;padding:1.25rem;">
+                                <h4 style="color:var(--text-muted);font-size:0.875rem;margin-bottom:0.5rem;">Claustro / Centro</h4>
+                                <p class="campus-count" id="count-claustro" style="font-size:1.75rem;font-weight:700;color:var(--primary);">0</p>
+                            </div>
+                            <div class="campus-card card" style="text-align:center;padding:1.25rem;">
+                                <h4 style="color:var(--text-muted);font-size:0.875rem;margin-bottom:0.5rem;">San Agustín</h4>
+                                <p class="campus-count" id="count-sanagustin" style="font-size:1.75rem;font-weight:700;color:var(--primary);">0</p>
+                            </div>
+                            <div class="campus-card card" style="text-align:center;padding:1.25rem;">
+                                <h4 style="color:var(--text-muted);font-size:0.875rem;margin-bottom:0.5rem;">Piedra de Bolívar</h4>
+                                <p class="campus-count" id="count-piedra" style="font-size:1.75rem;font-weight:700;color:var(--primary);">0</p>
+                            </div>
+                            <div class="campus-card card" style="text-align:center;padding:1.25rem;">
+                                <h4 style="color:var(--text-muted);font-size:0.875rem;margin-bottom:0.5rem;">Zaragocilla</h4>
+                                <p class="campus-count" id="count-zaragocilla" style="font-size:1.75rem;font-weight:700;color:var(--primary);">0</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="campus-breakdown">
+                        <h3 class="section-title" style="display:flex;align-items:center;gap:0.5rem;margin-bottom:1rem;font-size:1.1rem;color:var(--text-main);"><i data-lucide="pie-chart" style="color:var(--secondary)"></i> Costo Estimado por Persona (Con Holgura)</h3>
+                        <div class="campus-grid" style="display:grid;grid-template-columns:repeat(2, 1fr);gap:1rem;margin-bottom:2rem;">
+                            <div class="campus-card card" style="text-align:center;padding:1.25rem;border-left: 4px solid #7c2d12;">
+                                <h4 style="color:var(--text-muted);font-size:0.875rem;margin-bottom:0.5rem;">Costo Promedio x Estudiante (Solo Café)</h4>
+                                <p class="campus-count" id="cost-per-student" style="font-size:1.5rem;font-weight:700;color:#7c2d12;">$0</p>
+                            </div>
+                            <div class="campus-card card" style="text-align:center;padding:1.25rem;border-left: 4px solid #0284c7;">
+                                <h4 style="color:var(--text-muted);font-size:0.875rem;margin-bottom:0.5rem;">Costo Promedio x Profesor (Solo Agua)</h4>
+                                <p class="campus-count" id="cost-per-professor" style="font-size:1.5rem;font-weight:700;color:#0284c7;">$0</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card premium-card mt-4" style="margin-top:2rem;">
+                        <div class="card-header">
+                            <i data-lucide="bar-chart"></i>
+                            <h3>Reporte de Costos por Programa y Cohorte (Fin de Semana)</h3>
+                        </div>
+                        <div class="table-container">
+                            <table id="program-summary-table">
+                                <thead>
+                                    <tr>
+                                        <th>Programa Académico</th>
+                                        <th>Cohorte</th>
+                                        <th>Estudiantes</th>
+                                        <th>Profesores</th>
+                                        <th>Costo Total Proyectado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Populated by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="card premium-card" style="margin-top:2rem;">
+                        <div class="card-header">
+                            <i data-lucide="calculator"></i>
+                            <h3>Balance Presupuestal General</h3>
+                        </div>
+                        <div class="calculator-summary">
+                            <div class="calc-row">
+                                <span>Valor del Stock Físico Actual:</span>
+                                <strong id="calc-base-inventory">$0</strong>
+                            </div>
+                            <div class="calc-row">
+                                <span>Costo Insumos Requeridos (Incl. Margen Error):</span>
+                                <strong id="calc-projected-cost" style="color:#DC2626;">$0</strong>
+                            </div>
+                            <hr class="divider">
+                            <div class="calc-row total">
+                                <span>Balance del Fin de Semana:</span>
+                                <strong id="calc-budget-balance">$0</strong>
+                            </div>
+                            <small class="balance-hint" id="balance-hint" style="color:var(--text-muted);display:block;margin-top:0.5rem;">Calculando...</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cohorts View -->
+            <div id="view-cohorts" class="view hidden">
+                <div class="view-header">
+                    <div style="max-width: 60%">
+                        <p class="subtitle">Gestiona qué grupos tienen clases este fin de semana. Activa o desactiva las cohortes según la programación.</p>
+                    </div>
+                    <div class="actions">
+                        <button id="btn-load-pdf-data" class="btn-secondary"><i data-lucide="rotate-ccw"></i> Resetear a Datos de Fábrica (PDF)</button>
+                        <button id="btn-add-cohort" class="btn-primary"><i data-lucide="plus"></i> Agregar Cohorte</button>
+                    </div>
+                </div>
+                <div class="card table-card">
+                    <div class="table-container">
+                        <table id="cohorts-table">
+                            <thead>
+                                <tr>
+                                    <th>Programa Académico</th>
+                                    <th>Cohorte</th>
+                                    <th>Sede & Horario</th>
+                                    <th>Est. / Prof.</th>
+                                    <th>¿Activo Fin Sem.?</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Cohorts will be injected here -->
+                            </tbody>
+                        </table>
+                        <div id="cohorts-empty" class="empty-state">
+                            <i data-lucide="users" class="empty-icon"></i>
+                            <p>No hay grupos registrados</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Inventory View -->
+            <div id="view-inventory" class="view hidden">
+                <div class="view-header">
+                    <div style="max-width: 60%">
+                        <p class="subtitle">Inventario de compras al por mayor y proyecciones. Descarga tu lista para contabilidad.</p>
+                    </div>
+                    <div class="actions">
+                        <button id="btn-export-csv" class="btn-secondary" style="border-color:#10B981; color:#10B981;"><i data-lucide="download"></i> Descargar Lista (CSV)</button>
+                        <button id="btn-add-item" class="btn-primary"><i data-lucide="plus"></i> Nuevo Ítem</button>
+                    </div>
+                </div>
+                <div class="card table-card">
+                    <div class="table-container">
+                        <table id="inventory-table">
+                            <thead>
+                                <tr>
+                                    <th>Producto / Tipo</th>
+                                    <th>Costo Caja (Unitario)</th>
+                                    <th>Stock (Físico)</th>
+                                    <th>Req. (Con Holgura)</th>
+                                    <th>Costo Proyectado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Inventory items injected here -->
+                            </tbody>
+                        </table>
+                        <div id="inventory-empty" class="empty-state">
+                            <i data-lucide="package-open" class="empty-icon"></i>
+                            <p>El inventario está vacío</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Simulator View -->
+            <div id="view-simulator" class="view hidden">
+                <div class="view-header">
+                    <div style="max-width: 60%">
+                        <p class="subtitle">Simulador de consumo. Juega con los números para analizar la proporción exacta que gasta cada estudiante según tu inventario.</p>
+                    </div>
+                </div>
+                
+                <div class="card premium-card" style="margin-bottom:2rem; border-left: 4px solid #F59E0B;">
+                    <div class="card-header" style="color: #F59E0B;">
+                        <i data-lucide="settings-2"></i>
+                        <h3>Controles de Simulación</h3>
+                    </div>
+                    <div style="display:flex;gap:2rem;margin-top:1rem;">
+                        <div class="form-group" style="flex:1;">
+                            <label>Estudiantes</label>
+                            <input type="number" id="sim-students" min="1" value="100" style="font-size:1.25rem; font-weight:600; color:var(--primary);">
+                        </div>
+                        <div class="form-group" style="flex:1;">
+                            <label>Días de Evento</label>
+                            <input type="number" id="sim-days" min="1" value="3" style="font-size:1.25rem; font-weight:600; color:var(--primary);">
+                        </div>
+                        <div class="form-group" style="flex:1;">
+                            <label>Breaks por Día</label>
+                            <input type="number" id="sim-breaks" min="1" value="2" style="font-size:1.25rem; font-weight:600; color:var(--primary);">
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="simulator-results" style="display:grid; grid-template-columns: 1fr; gap: 1rem;">
+                    <!-- Simulator cards injected here -->
+                </div>
+            </div>
+
+            <!-- History View -->
+            <div id="view-history" class="view hidden">
+                <div class="view-header">
+                    <p class="subtitle">Historial de Cierres de Fin de Semana. Analiza la trazabilidad de tus costos.</p>
+                </div>
+                <div class="card table-card">
+                    <div class="table-container">
+                        <table id="history-table">
+                            <thead>
+                                <tr>
+                                    <th>Fecha de Cierre</th>
+                                    <th>Estudiantes Atendidos</th>
+                                    <th>Profesores Atendidos</th>
+                                    <th>Costo Total Gastado</th>
+                                    <th>Margen Aplicado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- History items injected here -->
+                            </tbody>
+                        </table>
+                        <div id="history-empty" class="empty-state">
+                            <i data-lucide="history" class="empty-icon"></i>
+                            <p>Aún no has cerrado ningún fin de semana.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="modal-overlay" class="modal-overlay hidden">
+        <!-- Cohort Modal -->
+        <div id="cohort-modal" class="modal hidden">
+            <div class="modal-header">
+                <h3 id="cohort-modal-title">Agregar Cohorte / Grupo</h3>
+                <button class="close-modal"><i data-lucide="x"></i></button>
+            </div>
+            <form id="cohort-form">
+                <input type="hidden" id="cohort-id">
+                <div class="form-group">
+                    <label>Programa Académico</label>
+                    <input type="text" id="cohort-program" required placeholder="Ej. Especialización en Finanzas">
+                </div>
+                <div class="form-group">
+                    <label>Cohorte / Detalle</label>
+                    <input type="text" id="cohort-name" required placeholder="Ej. COHORTE 5 SEM. 2">
+                </div>
+                <div class="form-group">
+                    <label>Sede</label>
+                    <select id="cohort-sede" required>
+                        <option value="Claustro / Centro">Claustro / Centro</option>
+                        <option value="San Agustín">San Agustín</option>
+                        <option value="Piedra de Bolívar">Piedra de Bolívar</option>
+                        <option value="Zaragocilla">Zaragocilla</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Horario</label>
+                    <select id="cohort-schedule" required>
+                        <option value="Viernes y Sábado">Viernes y Sábado (3 Breaks)</option>
+                        <option value="Solo Viernes">Solo Viernes (1 Break)</option>
+                        <option value="Solo Sábado">Solo Sábado (2 Breaks)</option>
+                        <option value="Miércoles a Viernes">Miércoles a Viernes (6 Breaks)</option>
+                    </select>
+                </div>
+                <div style="display:flex;gap:1rem;">
+                    <div class="form-group" style="flex:1;">
+                        <label>Estudiantes</label>
+                        <input type="number" id="cohort-students" min="1" required placeholder="Ej. 25">
+                    </div>
+                    <div class="form-group" style="flex:1;">
+                        <label>Profesores</label>
+                        <input type="number" id="cohort-professors" min="1" value="1" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary close-modal-btn">Cancelar</button>
+                    <button type="submit" class="btn-primary">Guardar Grupo</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Inventory Modal -->
+        <div id="inventory-modal" class="modal hidden">
+            <div class="modal-header">
+                <h3 id="inventory-modal-title">Compra Mayorista</h3>
+                <button class="close-modal"><i data-lucide="x"></i></button>
+            </div>
+            <form id="inventory-form">
+                <input type="hidden" id="item-id">
+                <div class="form-group">
+                    <label>Nombre del Producto</label>
+                    <input type="text" id="item-name" required placeholder="Ej. Caja de Café Sello Rojo">
+                </div>
+                <div class="form-group">
+                    <label>Tipo de Consumidor</label>
+                    <select id="item-type" required>
+                        <option value="coffee">Solo Estudiantes (Café)</option>
+                        <option value="water">Solo Profesores (Agua)</option>
+                        <option value="other">General (Ambos)</option>
+                    </select>
+                </div>
+                <div style="display:flex;gap:1rem;">
+                    <div class="form-group" style="flex:1;">
+                        <label>Costo de la Caja (COP)</label>
+                        <input type="number" id="item-wholesale-cost" min="0" step="50" required placeholder="Ej. 50000">
+                    </div>
+                    <div class="form-group" style="flex:1;">
+                        <label>Unidades que trae</label>
+                        <input type="number" id="item-wholesale-units" min="1" required placeholder="Ej. 100">
+                    </div>
+                </div>
+                <div class="form-group" style="border-top:1px solid var(--border-color); padding-top:1rem;">
+                    <label>Stock Físico (Cuántas UNIDADES individuales posees ahora)</label>
+                    <input type="number" id="item-stock" min="0" required placeholder="Ej. 500">
+                </div>
+                
+                <div class="form-group" style="border-top:1px solid var(--border-color); padding-top:1rem; background-color: #F8FAFC; padding: 1rem; border-radius: var(--radius-md);">
+                    <label style="color: var(--primary); font-weight: 600;">Método de Cálculo de Consumo</label>
+                    <select id="item-calc-method" required onchange="toggleCalcMethod()">
+                        <option value="individual">Consumo Exacto (Ej: 1 botella por persona)</option>
+                        <option value="ratio">Consumo a Granel / Lote (Ej: 4 bolsas por 98 personas)</option>
+                    </select>
+                    
+                    <!-- Individual Method -->
+                    <div id="calc-group-individual" style="margin-top: 1rem;">
+                        <label>Uso por Break (Unidades por persona)</label>
+                        <input type="number" id="item-projection" min="0" step="0.01" value="1" placeholder="Ej. 1">
+                    </div>
+                    
+                    <!-- Ratio Method -->
+                    <div id="calc-group-ratio" style="margin-top: 1rem; display: none;">
+                        <div style="display:flex;gap:1rem;align-items:center;">
+                            <div style="flex:1;">
+                                <label>Unidades a gastar</label>
+                                <input type="number" id="item-ratio-units" min="0" step="0.01" placeholder="Ej. 4">
+                            </div>
+                            <span style="font-weight:600;margin-top:1.5rem;">por cada</span>
+                            <div style="flex:1;">
+                                <label>Personas</label>
+                                <input type="number" id="item-ratio-people" min="1" placeholder="Ej. 98">
+                            </div>
+                        </div>
+                        <small class="hint" style="margin-top:0.5rem;display:block;">El sistema multiplicará automáticamente esta proporción por el total de personas y breaks activos.</small>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary close-modal-btn">Cancelar</button>
+                    <button type="submit" class="btn-primary">Guardar Producto</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="toast hidden">
+        <i data-lucide="check-circle"></i>
+        <span id="toast-message">Operación exitosa</span>
+    </div>
+
+    <script>
+        function toggleCalcMethod() {
+            const method = document.getElementById('item-calc-method').value;
+            if(method === 'individual') {
+                document.getElementById('calc-group-individual').style.display = 'block';
+                document.getElementById('calc-group-ratio').style.display = 'none';
+                
+                document.getElementById('item-projection').setAttribute('required', 'required');
+                document.getElementById('item-ratio-units').removeAttribute('required');
+                document.getElementById('item-ratio-people').removeAttribute('required');
+            } else {
+                document.getElementById('calc-group-individual').style.display = 'none';
+                document.getElementById('calc-group-ratio').style.display = 'block';
+                
+                document.getElementById('item-projection').removeAttribute('required');
+                document.getElementById('item-ratio-units').setAttribute('required', 'required');
+                document.getElementById('item-ratio-people').setAttribute('required', 'required');
+            }
+        }
+    </script>
+    <script src="app.js"></script>
+</body>
+</html>

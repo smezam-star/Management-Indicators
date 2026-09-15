@@ -105,6 +105,12 @@
                             Información Base y Guías</span>
                     </div>
                 </button>
+                <!-- AI Search Button -->
+                <button id="btn-open-search" class="btn-search-ai-sim">
+                    <span>✨</span>
+                    <span>Buscador IA</span>
+                    <span class="ai-badge-sim">NUEVO</span>
+                </button>
             </div>
         </aside>
 
@@ -656,9 +662,206 @@
         </div>
     </div>
 
+    <!-- AI Search Panel -->
+    <div id="search-backdrop" class="sim-search-backdrop hidden"></div>
+    <div id="search-panel" class="sim-search-panel hidden">
+        <div class="sim-search-header">
+            <div class="sim-search-title">✨ Asistente IA</div>
+            <button id="btn-close-search" class="sim-close-btn">✕</button>
+        </div>
+        <div id="chat-messages" class="sim-chat-messages">
+            <div class="sim-msg sim-msg-bot">
+                <div class="sim-avatar">🤖</div>
+                <div class="sim-bubble">
+                    <p>¡Hola! Puedo buscar información sobre <strong>indicadores de gestión</strong>, políticas públicas o cualquier otro tema en Wikipedia, DuckDuckGo, Wikidata y más fuentes.</p>
+                    <div class="sim-suggestions">
+                        <button class="sim-chip" onclick="simTrigger('¿Qué son los indicadores de gestión pública?')">📊 Indicadores de gestión</button>
+                        <button class="sim-chip" onclick="simTrigger('¿Qué es el DNP en Colombia?')">🏛️ DNP Colombia</button>
+                        <button class="sim-chip" onclick="simTrigger('¿Qué es la cadena de valor pública?')">🔗 Cadena de valor</button>
+                        <button class="sim-chip" onclick="simTrigger('¿Qué son los indicadores CREMAS?')">📋 Criterios CREMAS</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="sim-chat-input">
+            <input type="text" id="search-input" placeholder="Pregúntame algo..." autocomplete="off">
+            <button id="btn-send-search" class="sim-send-btn">➤</button>
+        </div>
+    </div>
+
     <script src="knowledge.js"></script>
     <script src="preguntas_frecuentes.js"></script>
     <script src="script.js"></script>
+
+    <script>
+    /* ============================================================
+       MULTI-SOURCE AI SEARCH — Simulador Indicadores de Gestión
+       Sources: Wikipedia ES/EN · DuckDuckGo · Wikidata · Open Library
+       External: Google · Bing · DuckDuckGo · YouTube · Scholar
+    ============================================================ */
+    (function () {
+        const ENGINES = [
+            { name: 'Google',  icon: '🔍', color: '#4285F4', url: q => `https://www.google.com/search?q=${encodeURIComponent(q)}` },
+            { name: 'Bing',    icon: '🌐', color: '#00809D', url: q => `https://www.bing.com/search?q=${encodeURIComponent(q)}` },
+            { name: 'DDG',     icon: '🦆', color: '#DE5833', url: q => `https://duckduckgo.com/?q=${encodeURIComponent(q)}` },
+            { name: 'YouTube', icon: '▶️', color: '#FF0000', url: q => `https://www.youtube.com/results?search_query=${encodeURIComponent(q)}` },
+            { name: 'Scholar', icon: '🎓', color: '#38bdf8', url: q => `https://scholar.google.com/scholar?q=${encodeURIComponent(q)}` },
+        ];
+
+        // ── Source fetchers ─────────────────────────────────────
+        async function fetchWikipediaES(q) {
+            const s = await fetch(`https://es.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(q)}&srlimit=1&format=json&origin=*`);
+            const sd = await s.json();
+            if (!sd.query.search.length) return null;
+            const title = sd.query.search[0].title;
+            const r = await fetch(`https://es.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`);
+            const d = await r.json();
+            if (!d.extract) return null;
+            return { source: '📘 Wikipedia ES', color: '#3F88C5', title: d.title, extract: d.extract, url: d.content_urls?.desktop?.page || '#', label: 'Ver Wikipedia ES' };
+        }
+        async function fetchWikipediaEN(q) {
+            const s = await fetch(`https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(q)}&srlimit=1&format=json&origin=*`);
+            const sd = await s.json();
+            if (!sd.query.search.length) return null;
+            const title = sd.query.search[0].title;
+            const r = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`);
+            const d = await r.json();
+            if (!d.extract) return null;
+            return { source: '📗 Wikipedia EN', color: '#2E8B57', title: d.title, extract: d.extract, url: d.content_urls?.desktop?.page || '#', label: 'Ver Wikipedia EN' };
+        }
+        async function fetchDDG(q) {
+            const r = await fetch(`https://api.duckduckgo.com/?q=${encodeURIComponent(q)}&format=json&no_html=1&no_redirect=1&skip_disambig=1&origin=*`);
+            const d = await r.json();
+            const extract = d.AbstractText || d.Answer || '';
+            if (!extract) return null;
+            return { source: '🦆 DuckDuckGo', color: '#DE5833', title: d.Heading || q, extract, url: d.AbstractURL || `https://duckduckgo.com/?q=${encodeURIComponent(q)}`, label: 'Ver en DuckDuckGo' };
+        }
+        async function fetchWikidata(q) {
+            const r = await fetch(`https://www.wikidata.org/w/api.php?action=wbsearchentities&search=${encodeURIComponent(q)}&language=es&limit=1&format=json&origin=*`);
+            const d = await r.json();
+            if (!d.search?.length || !d.search[0].description) return null;
+            const item = d.search[0];
+            return { source: '🗄️ Wikidata', color: '#f59e0b', title: item.label || q, extract: item.description, url: item.url || '#', label: 'Ver en Wikidata' };
+        }
+        async function fetchOpenLibrary(q) {
+            const r = await fetch(`https://openlibrary.org/search.json?q=${encodeURIComponent(q)}&limit=1&fields=title,author_name,first_publish_year,subject`);
+            const d = await r.json();
+            if (!d.docs?.length || !d.docs[0].title) return null;
+            const b = d.docs[0];
+            const authors = b.author_name?.slice(0,2).join(', ') || 'Desconocido';
+            const subj = b.subject?.slice(0,3).join(', ') || '';
+            return { source: '📚 Open Library', color: '#E87B35', title: b.title, extract: `Publicado en ${b.first_publish_year||'?'} por ${authors}.${subj?' Temas: '+subj+'.':''}`, url: `https://openlibrary.org/search?q=${encodeURIComponent(q)}`, label: 'Ver Open Library' };
+        }
+
+        async function multiSearch(q) {
+            const all = await Promise.allSettled([
+                fetchWikipediaES(q).catch(()=>null),
+                fetchDDG(q).catch(()=>null),
+                fetchWikidata(q).catch(()=>null),
+                fetchWikipediaEN(q).catch(()=>null),
+                fetchOpenLibrary(q).catch(()=>null),
+            ]);
+            const valid = all.filter(r=>r.status==='fulfilled'&&r.value).map(r=>r.value);
+            if (!valid.length) return null;
+            valid.sort((a,b)=>(b.extract?.length||0)-(a.extract?.length||0));
+            return { primary: valid[0], all: valid };
+        }
+
+        // ── DOM helpers ─────────────────────────────────────────
+        function esc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+        function enginesBar(q) {
+            const btns = ENGINES.map(e=>`<a href="${e.url(q)}" target="_blank" class="sim-eng-btn" style="--ec:${e.color}">${e.icon} ${e.name}</a>`).join('');
+            return `<div class="sim-eng-bar"><div class="sim-eng-label">Buscar también en:</div><div class="sim-eng-row">${btns}</div></div>`;
+        }
+
+        function altSources(all) {
+            if (all.length <= 1) return '';
+            const chips = all.slice(1).map(r=>`<a href="${r.url}" target="_blank" class="sim-alt-chip" style="--sc:${r.color}">${r.source}</a>`).join('');
+            return `<div class="sim-alt"><div class="sim-eng-label">Otras fuentes:</div><div class="sim-eng-row">${chips}</div></div>`;
+        }
+
+        function addMsg(role, html) {
+            const c = document.getElementById('chat-messages');
+            const d = document.createElement('div');
+            d.className = `sim-msg sim-msg-${role}`;
+            d.innerHTML = `<div class="sim-avatar">${role==='user'?'🧑':'🤖'}</div><div class="sim-bubble">${html}</div>`;
+            c.appendChild(d);
+            c.scrollTop = c.scrollHeight;
+            return d;
+        }
+
+        function showTyping() {
+            const c = document.getElementById('chat-messages');
+            const d = document.createElement('div');
+            d.className = 'sim-msg sim-msg-bot';
+            d.innerHTML = `<div class="sim-avatar">🤖</div><div class="sim-bubble sim-typing"><span></span><span></span><span></span></div>`;
+            c.appendChild(d);
+            c.scrollTop = c.scrollHeight;
+            return d;
+        }
+
+        async function handleSearch() {
+            const inp = document.getElementById('search-input');
+            const q = inp.value.trim();
+            if (!q) return;
+            inp.value = '';
+            inp.disabled = true;
+            document.getElementById('btn-send-search').disabled = true;
+            addMsg('user', `<p>${esc(q)}</p>`);
+            const typing = showTyping();
+            try {
+                const data = await multiSearch(q);
+                typing.remove();
+                if (!data) {
+                    addMsg('bot', `<p>🔎 No encontré respuesta directa para <strong>"${esc(q)}"</strong>.</p>${enginesBar(q)}`);
+                } else {
+                    const { primary, all } = data;
+                    const sentences = primary.extract.split('. ');
+                    const summary = sentences.slice(0,5).join('. ') + (sentences.length>5?'...':'');
+                    addMsg('bot', `
+                        <div class="sim-src-badge" style="--sc:${primary.color}">${primary.source}</div>
+                        <strong>${esc(primary.title)}</strong>
+                        <p style="margin-top:0.4rem">${esc(summary)}</p>
+                        <a href="${primary.url}" target="_blank" class="sim-src-link">🔗 ${primary.label}</a>
+                        ${altSources(all)}
+                        ${enginesBar(q)}
+                    `);
+                }
+            } catch(e) {
+                typing.remove();
+                addMsg('bot', `<p>⚠️ Error de conexión. Verifica tu internet.</p>${enginesBar(q)}`);
+            } finally {
+                inp.disabled = false;
+                document.getElementById('btn-send-search').disabled = false;
+                inp.focus();
+            }
+        }
+
+        window.simTrigger = function(text) {
+            document.getElementById('search-input').value = text;
+            handleSearch();
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('btn-open-search').addEventListener('click', function() {
+                document.getElementById('search-panel').classList.remove('hidden');
+                document.getElementById('search-backdrop').classList.remove('hidden');
+                setTimeout(()=>document.getElementById('search-input').focus(), 350);
+            });
+            document.getElementById('btn-close-search').addEventListener('click', function() {
+                document.getElementById('search-panel').classList.add('hidden');
+                document.getElementById('search-backdrop').classList.add('hidden');
+            });
+            document.getElementById('search-backdrop').addEventListener('click', function() {
+                document.getElementById('search-panel').classList.add('hidden');
+                document.getElementById('search-backdrop').classList.add('hidden');
+            });
+            document.getElementById('btn-send-search').addEventListener('click', handleSearch);
+            document.getElementById('search-input').addEventListener('keydown', e=>{ if(e.key==='Enter') handleSearch(); });
+        });
+    })();
+    </script>
 
     <!-- Hover Assistant -->
     <div id="hover-assistant" class="hover-assistant hidden">
@@ -667,6 +870,61 @@
         </div>
         <img src="assets/pato.png" class="assistant-avatar duck-avatar" alt="Asistente Pato">
     </div>
+
+    <!-- ✨ Floating AI Search Button — injected via JS to avoid CSS conflicts -->
+    <script>
+    (function injectFAB() {
+        // Create a fixed-position wrapper OUTSIDE normal flow using a portal div
+        var fab = document.createElement('a');
+        fab.href = '../buscador.html';
+        fab.target = '_blank';
+        fab.rel = 'noopener';
+        fab.id = 'fab-buscador';
+        fab.innerHTML = '<span style="font-size:1.2rem;animation:fabGlow 3s ease-in-out infinite">✨</span> Buscador IA';
+        fab.setAttribute('title', 'Abrir Buscador IA');
+
+        var style = document.createElement('style');
+        style.textContent = `
+            #fab-buscador {
+                all: unset;
+                cursor: pointer;
+                position: fixed !important;
+                bottom: 28px !important;
+                right: 28px !important;
+                z-index: 2147483647 !important;
+                display: inline-flex !important;
+                align-items: center;
+                gap: 8px;
+                padding: 12px 20px;
+                background: linear-gradient(135deg, #6366f1, #8b5cf6) !important;
+                color: #fff !important;
+                text-decoration: none !important;
+                border-radius: 50px;
+                font-family: 'Outfit', 'Segoe UI', sans-serif;
+                font-size: 15px;
+                font-weight: 700;
+                letter-spacing: 0.02em;
+                box-shadow: 0 8px 32px rgba(99,102,241,0.55), 0 2px 8px rgba(0,0,0,0.3);
+                transition: transform 0.25s, box-shadow 0.25s;
+                white-space: nowrap;
+                pointer-events: auto !important;
+                transform: translateZ(0); /* Force own stacking context */
+            }
+            #fab-buscador:hover {
+                transform: translateY(-4px) scale(1.04) translateZ(0) !important;
+                box-shadow: 0 16px 48px rgba(99,102,241,0.65), 0 4px 12px rgba(0,0,0,0.3);
+            }
+            @keyframes fabGlow {
+                0%,100% { transform: scale(1) rotate(0deg); }
+                50%      { transform: scale(1.25) rotate(12deg); }
+            }
+        `;
+
+        // Append style + button directly to <html> element (not body) to escape body overflow
+        document.documentElement.appendChild(style);
+        document.documentElement.appendChild(fab);
+    })();
+    </script>
 </body>
 
 </html>
