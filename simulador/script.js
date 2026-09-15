@@ -639,9 +639,10 @@ Mantén un tono institucional, pedagógico y directo.`;
         });
 
         // Set an appropriate Cadena de Valor based on the example
-        if (prefix === 'salud') state.data.cadenaValor = 'productos';
-        else if (prefix === 'edu' || prefix === 'seg' || prefix === 'amb') state.data.cadenaValor = 'resultados';
-        else state.data.cadenaValor = 'actividades';
+        // IMPORTANT: values must match exactly the radio input value attributes (PascalCase)
+        if (prefix === 'salud') state.data.cadenaValor = 'Productos';
+        else if (prefix === 'edu' || prefix === 'seg' || prefix === 'amb') state.data.cadenaValor = 'Resultados';
+        else state.data.cadenaValor = 'Actividades';
 
         saveState();
         populateInputs();
